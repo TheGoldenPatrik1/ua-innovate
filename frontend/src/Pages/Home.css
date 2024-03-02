@@ -1,0 +1,68 @@
+
+.app {
+    background-image: linear-gradient(to right, #5236ab, #e31937);
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;    
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+.login-container {
+    width: 400px; /* Adjust the width of the box */
+    height: 300px; /* Adjust the height of the box */
+    background-color: rgb(243, 243, 243);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.login-container input {
+    width: 250px; /* Adjust width as needed */
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.login-header {
+    margin-bottom: 10px;
+    font-size: 48px;
+    margin-top: 10px;
+}
+
+.CGI-lettering {
+    position: absolute;
+    left: 1%; /* Adjust right position */
+    top: -5%; /* Adjust right position */
+    font-size: 72px;
+    color: #ffffff; /* Adjust color */
+}
+
+.button {
+    padding: 10px 20px; /* Increase padding for better appearance */
+    border-color: #5236ab;
+    margin-top: 0px; /* Add margin-bottom for spacing between buttons */
+    width: 270px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 5px 1px; /* Adjust padding as needed */
+    cursor: pointer;
+    font-size: 20px; /* Increase font size for better visibility */
+  }
+
+.divider {
+    width: 100%; /* Set the width to fill the container */
+    height: 1px; /* Set the height of the divider */
+    background-color: #ccc; /* Set the color of the divider */
+  }
