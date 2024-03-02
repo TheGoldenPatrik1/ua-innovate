@@ -7,7 +7,8 @@ import {
 import './index.css';
 
 import Home from "./pages/Home"
-import StudentPortal from "./pages/StudentPortal"
+import StudentApp from "./pages/StudentApp"
+import StudentHome from "./pages/StudentHome"
 import HRPortal from "./pages/HRPortal"
 import ErrorPage from "./pages/ErrorPage"
 
@@ -18,8 +19,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>
   },
   {
-    path: 'student',
-    element: <StudentPortal/>
+    path: 'student/app',
+    element: <StudentApp/>
+  },
+  {
+    path: 'student/home',
+    element: <StudentHome/>
   },
   {
     path: 'hr',
