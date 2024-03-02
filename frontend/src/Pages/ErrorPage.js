@@ -1,7 +1,7 @@
 function ErrorPage() {
     return (
         <div>
-            <p>Oops an error occurred</p>
+            <h1>Error 404 - this page cannot be reached.</h1>
         </div>
     )
 }

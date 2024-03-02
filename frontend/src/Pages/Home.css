@@ -1,0 +1,39 @@
+
+.app {
+    background-image: linear-gradient(to right, #5236ab, #e31937);
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;    
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+.login-container {
+    width: 400px; /* Adjust the width of the box */
+    height: 300px; /* Adjust the height of the box */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1); /* Adjust shadow as needed */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.login-header {
+    font-size: 48px;
+    margin-top: 10px;
+}
+
+.CGI-lettering {
+    position: absolute;
+    left: 1%; /* Adjust right position */
+    top: -5%; /* Adjust right position */
+    font-size: 72px;
+    color: #ffffff; /* Adjust color */
+}
