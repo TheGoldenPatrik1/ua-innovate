@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 
-function StudentPortal() {
+function StudentApp () {
+    const [majors, setMajors] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(`http://localhost:8080/api/majors`);
+            response.data.unshift({major: ""})
+            setMajors(response.data);
+        }
+
+        fetchData();
+    }, []);
+
+
     const [resume, setResume] = useState('')
     const [fname, setFname] = useState('')
     const [lname, setLname] = useState('')
@@ -23,9 +37,9 @@ function StudentPortal() {
 
     const submitHandler = () => {
         // verify input - this probably needs to be expanded
-        /*if (!resume || !fname || !lname || !email || !phone || !major || !graduation || !workpref) {
+        if (!resume || !fname || !lname || !email || !phone || !major || !graduation || !workpref) {
             return alert('Required field missing!')
-        }*/
+        }
 
         // input is verified; now write to database
 
@@ -42,7 +56,7 @@ function StudentPortal() {
             <p>
                 <label htmlFor="resume">Resume</label>
                 <br/>
-                <input type="file" id="resume" name="resume" value={resume} accept=".pdf,.doc,.docx" onChange={e => /*setResume(e.target.files[0])*/ setResume('')}/>
+                <input type="file" id="resume" name="resume" value={resume} accept=".pdf,.doc,.docx" onChange={e => setResume('')}/>
             </p>
             <p>
                 <label htmlFor="fname">First Name</label>
@@ -118,10 +132,9 @@ function StudentPortal() {
                     setMajor(e.target.value)
 
                 }}>
-                    <option value=""></option>
-                    <option value="cs">Computer Science</option>
-                    <option value="mis">MIS</option>
-                    <option value="business">Business</option>
+                    {majors.map(v => {
+                        return (<option value={v.major}>{v.major}</option>)
+                    })}
                 </select>
             </p>
             <p>
@@ -158,4 +171,4 @@ function StudentPortal() {
     )
 }
 
-export default StudentPortal
+export default StudentApp

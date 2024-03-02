@@ -4,9 +4,12 @@ import studentController from './controllers/studentController.mjs'
 import majorController from './controllers/majorController.mjs'
 import categoryController from './controllers/categoryController.mjs'
 import locationController from './controllers/locationController.mjs'
+import cors from 'cors'
 
 const app = express();
 const port = process.env.PORT || 8080;
+
+app.use(cors());
 
 app.use(express.json())
 app.use('/api', studentController)

@@ -1,0 +1,64 @@
+#stepProgressBar  {
+	display:  flex;
+	justify-content:  space-between;
+	align-items:  flex-end;
+	width:  700px;
+	margin:  0  auto;
+	margin-bottom:  40px;
+}
+
+.step  {
+    text-align:  center;
+}
+
+.step-text  {
+    margin-bottom:  10px;
+}
+
+
+.bullet {
+	border: 1px solid #E31937;
+	height: 20px;
+	width: 20px;
+	border-radius: 100%;
+	color: #E31937;
+	display: inline-block;
+	position: relative;
+	transition: background-color 500ms;
+    line-height:20px;
+}
+
+
+.bullet.completed  {
+	color:  white;
+	background-color:  #E31937;
+}
+
+
+
+.bullet.completed::after {
+	content: '';
+	position: absolute;
+	right: -110px;
+	bottom: 10px;
+	height: 1px;
+	width: 75px;
+	background-color: #E31937;
+}
+
+/* Base styles and helper stuff */
+.hidden  {
+	display:  none;
+}
+
+.text-center  {
+	text-align:  center;
+}
+  
+.container  {
+	max-width:  400px;
+	margin:  0  auto;
+	margin-top:  20px;
+	padding:  40px;
+}
+
