@@ -1,0 +1,12 @@
+.category-title {
+    display: flex;
+    column-gap: 5px;
+}
+
+.category-name {
+    flex-grow: 1;
+}
+
+.filter-category {
+    margin: 5px;
+}

@@ -1,5 +1,17 @@
 .portal {
     display: flex;
     column-gap: 10px;
-  }
+}
+
+#student-table {
+    display: flex;
+    flex-direction: column;
+}
+
+#main {
+    width: 100%;
+}
+
+
+
   
