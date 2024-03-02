@@ -21,7 +21,7 @@ function Home() {
           <h2 className='login-header'>Welcome</h2>
           <input type="text" id="email" name="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)}/>
           <br/>
-          <input type="text" id="pw" name="pw"  placeholder="Password" value={pw} onChange={e => setPW(e.target.value)}/>
+          <input type="pass" id="pw" name="pw"  placeholder="Password" value={pw} onChange={e => setPW(e.target.value)}/>
           <br/>
           <button className='button' onClick={loginClick}>Login</button>
           <h3 className="divider"></h3>

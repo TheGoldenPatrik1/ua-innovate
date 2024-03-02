@@ -66,3 +66,8 @@
     height: 1px; /* Set the height of the divider */
     background-color: #ccc; /* Set the color of the divider */
   }
+
+  input[type="pass"] {
+    -webkit-text-security: disc; 
+    text-security: disc;
+  }
