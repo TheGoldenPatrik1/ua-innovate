@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import '../styles/StudentApp.css'
 
 function StudentApp () {
     const [majors, setMajors] = useState([]);
@@ -51,23 +52,25 @@ function StudentApp () {
     // for resume upload: https://www.filestack.com/fileschool/react/react-file-upload/
     
     return (
-        <div>
+        <div className="background">
+            <div className="application-form">
             <h1>Application</h1>
             <p>
                 <label htmlFor="resume">Resume</label>
                 <br/>
                 <input type="file" id="resume" name="resume" value={resume} accept=".pdf,.doc,.docx" onChange={e => setResume('')}/>
             </p>
-            <p>
-                <label htmlFor="fname">First Name</label>
+            <div className="form-row">
+            <h1 class="header-label">Name:</h1>
+            <p className="form-group">
+                <input className="" type="text" id="fname" name="fname" value={fname} onChange={e => setFname(e.target.value)}/>
                 <br/>
-                <input type="text" id="fname" name="fname" value={fname} onChange={e => setFname(e.target.value)}/>
-            </p>
-            <p>
-                <label htmlFor="lname">Last Name</label>
-                <br/>
+                <label htmlFor="fname">First Name</label></p>
+            <p className="form-group">
                 <input type="text" id="lname" name="lname" value={lname} onChange={e => setLname(e.target.value)}/>
-            </p>
+                <br/>
+                <label htmlFor="lname">Last Name</label>
+                </p></div>
             <p>
                 <label htmlFor="email">Email Address</label>
                 <br/>
@@ -167,6 +170,7 @@ function StudentApp () {
             <p>
                 <button onClick={submitHandler}>Submit</button>
             </p>
+            </div>
         </div>
     )
 }

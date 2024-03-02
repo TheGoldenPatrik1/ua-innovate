@@ -1,3 +1,13 @@
+.student-row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.student-field {
+    flex: 1 1 300px;
+}
+
 
 .student-field {
     flex-basis: 300px;
