@@ -2,7 +2,7 @@ import "../styles/StudentHome.css"
 
 export default function() {
     return (
-        <div>
+        <div className="background">
             <h2>Candidate Home</h2>
             <h3 style={{textAlign: 'center'}}>Application Progress</h3>
             <div id="stepProgressBar">
