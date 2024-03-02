@@ -12,6 +12,21 @@ router.get('/students', async (req, res) => {
   }
 });
 
+// Create new student
+router.post('/students', async (req, res) => {
+  try{
+    console.log("here1")
+    const student = new Student(req.body)
+    console.log("here2")
+    await student.save();
+    console.log("here4");
+    res.send(student);
+    console.log("here5")
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
 // Get a single student by ID
 router.get('/students/:id', async (req, res) => {
   try {
