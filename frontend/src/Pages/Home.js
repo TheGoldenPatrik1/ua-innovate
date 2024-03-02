@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import './Home.css';
 
 function Home() {
     const [email, setEmail] = useState('')
@@ -14,9 +15,10 @@ function Home() {
         navigate("/student/app")
     }
     return (
-      <div className="App">
-        <header className="App-header">
-          <h2>Login</h2>
+      <div className="app">
+        <h1 className="CGI-lettering">CGI</h1>
+        <header className="login-container">
+          <h2 className='login-header'>Login</h2>
           <label htmlFor="email">Email Address</label>
           <input type="text" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}/>
           <br/>
