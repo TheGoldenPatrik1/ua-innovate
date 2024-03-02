@@ -36,4 +36,17 @@ router.get('/students/:id', async (req, res) => {
   }
 });
 
+// Edit a student by ID
+router.put("/students/:id", async (req, res) => {
+  try {
+    const student = await Student.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+    res.json(student)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
+
 export default router;
