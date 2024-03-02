@@ -1,0 +1,7 @@
+.student-row {
+    display: flex;
+    column-gap: 10px;
+}
+.student-email, .student-name {
+    flex-basis: 100px;
+}
