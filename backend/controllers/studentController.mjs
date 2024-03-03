@@ -2,6 +2,7 @@ import express from "express"
 const router = express.Router();
 import Student from '../models/Student.mjs'
 import User from '../models/User.mjs'
+import upload from '../middleware/upload.mjs'
 
 // Get all students
 router.get('/students', async (req, res) => {
@@ -14,9 +15,12 @@ router.get('/students', async (req, res) => {
 });
 
 // Create new student
-router.post('/students', async (req, res) => {
+router.post('/students', upload.single('resume'), async (req, res) => {
   try{
     const student = new Student(req.body)
+    if (req.file) {
+      student.resume = req.file.path
+    }
     await student.save();
     res.send(student);
   } catch (error) {
