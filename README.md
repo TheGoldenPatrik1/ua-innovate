@@ -1,7 +1,13 @@
 # UA Innovate 2024
 
+Our application is a three-tier full-stack mobile application to assist CGI with managing candidate data.
+
 ## Frontend
-blah blah blah
+
+### Setup
+- In a terminal, navigate to `/frontend`.
+- To download the `node_modules` folder, run the command `npm install`.
+- To start the app, run the command `npm start`.
 
 ## Backend
 
