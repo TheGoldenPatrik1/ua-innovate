@@ -58,7 +58,11 @@
     border:2px solid #e31937;
 }
 .white {
-	background-color: #8b8b8b;
+	background-color: #696969;
+    border:2px solid #696969;
+}
+.gray {
+    background-color: #696969;
 }
 
 .blue:hover {
@@ -74,6 +78,14 @@
     background-color: #ffffff;
     color:#e31937;
     border:2px solid #e31937;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+}
+
+.white:hover, .gray:hover {
+    background-color: #ffffff;
+    color:#696969;
+    border:2px solid #696969;
     transition-duration: 0.3s;
     transition-property: background-color;
 }
@@ -103,7 +115,7 @@
   }
 
   #portal-search-container {
-    flex: 1 1 500px;
+    flex: 1 1 300px;
     display: flex;
 	align-items: center;
 	justify-content: center;

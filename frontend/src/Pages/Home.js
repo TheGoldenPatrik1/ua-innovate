@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './../styles/Home.css';
 import axios from 'axios';
+import ReactDOM from "react-dom";
+import QRCode from "react-qr-code";
 
 function Home() {
     const params = new URLSearchParams(window.location.search)

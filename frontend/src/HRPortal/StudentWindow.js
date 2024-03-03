@@ -12,6 +12,7 @@ class StudentWindow extends React.Component{
         this.navigation = props.navigation;
         console.log(props)
         this.state = {
+            reportDisabled: false,
             student: props.student,
             edit: false,
             categories: props.student.categories,
@@ -37,6 +38,23 @@ class StudentWindow extends React.Component{
     closeStudentWindow = () => {
         this.props.parentCallback(-1);
     }
+
+    resumeBtnClick = () => {
+        window.open(`http://localhost:8080/${this.state.resume}`, '_blank');
+    }
+
+    reportBtnClick = () => {
+        this.setState({reportDisabled: true})
+        axios.get('http://localhost:8080/api/reports/' + this.state.student._id).then(r => {
+            setTimeout(() => {
+                window.open(`http://localhost:8080/reports/${this.state.student._id}.pdf`, '_blank');
+                this.setState({reportDisabled: false})
+            }, 5000)
+        }).catch(e => {
+            console.log(e)
+        })
+    }
+
     editBtnClick =() => {
         if(this.state.edit) {
             this.setState({edit:false});
@@ -110,12 +128,11 @@ class StudentWindow extends React.Component{
                 <div class="student-modal-content">
                     <div class="student-modal-header">
                         <span class="close" id="student-modal-close" onClick={this.closeStudentWindow}>&times;</span>
-                        <button class="modal-header-btn" onClick={this.editBtnClick}>{this.state.edit ? "Save" : "Edit"}</button>
-                        <button class="modal-header-btn" onClick={this.delBtnClick}>{this.state.edit ? "Cancel" : "Delete"}</button>
+                        
+                        
                         <h2>{this.GetFullName()}</h2>
                     </div>
                     <div id="student-window" class="modal-body">
-                        <FormValue label="Resume Link" href={this.state.resume} inputType="href"/>
                         <FormValue label="First Name: " value={this.state.fname} edit={this.state.edit} inputType="text" stateKey="fname" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Last Name: " value={this.state.lname} edit={this.state.edit} inputType="text" stateKey="lname" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
@@ -130,7 +147,15 @@ class StudentWindow extends React.Component{
                         <FormValue label="Interview Status: " editable={true} value={this.state.interview_status} edit={this.state.edit} inputType="select" options={['Pending Review', 'First Round', 'Final Round', 'Offer Sent', 'Hired']} stateKey="interview_status" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Technical Score: " editable={true} value={this.state.technical_score} edit={this.state.edit} inputType="number" stateKey="technical_score" parentCallback={this.onChangeCallback} max={5} min={0}/>
                         <FormValue label="Behavioral Score: " editable={true} value={this.state.behavioral_score} edit={this.state.edit} inputType="number" stateKey="behavioral_score" parentCallback={this.onChangeCallback} max={5} min={0}/>
-                        <FormValue label="Comments: " editable={true} value={this.state.comments} edit={this.state.edit} inputType="text" stateKey="comments" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Comments: " editable={true} value={this.state.comments} edit={this.state.edit} inputType="textarea" stateKey="comments" parentCallback={this.onChangeCallback}/>
+                    </div>
+                    <div className="divider"></div>
+                    <div class="student-modal-footer">
+                        <div className='button-container'><button class="modal-styled-button white modal-footer-btn" disabled={this.state.reportDisabled} onClick={this.reportBtnClick}>Generate Report</button></div>
+                        <div className='button-container'>{this.state.resume && <button class=" modal-styled-button white modal-footer-btn" onClick={this.resumeBtnClick}>View Resume</button>}</div>
+                        <div className='button-container'><button class="modal-styled-button blue modal-footer-btn" onClick={this.editBtnClick}>{this.state.edit ? "Save" : "Edit"}</button></div>
+                        <div className='button-container'><button class="modal-styled-button red modal-footer-btn" onClick={this.delBtnClick}>{this.state.edit ? "Cancel" : "Delete"}</button></div>
+                        
                     </div>
                 </div>
             </div>
