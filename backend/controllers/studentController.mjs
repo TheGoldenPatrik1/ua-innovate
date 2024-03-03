@@ -53,8 +53,21 @@ const generateMd = (student, school, major, categories, location_prefs) => {
 const generateCsv = (students) => {
   let csv = "Last Name, First Name, Email, Phone, LinkedIn, School, Major, Graduation Date, Job Type, Roles, Locations, Interview Status, Technical Score, Behavioral Score, Comments\n"
   students.forEach((stu) => {
+    console.log("here")
+    let new_categories = ""
+    stu.categories.forEach((category) => {
+      new_categories = new_categories + category + '; '
+    })
+    new_categories = new_categories.substring(0, new_categories.length - 2)
+
+    let new_locs = ""
+    stu.location_prefs.forEach((loc) => {
+      new_locs = new_locs + loc + '; '
+    })
+    new_locs = new_locs.substring(0, new_locs.length - 2)
+
     csv = csv + stu.lname + ', ' + stu.fname + ', ' + stu.email + ', ' + stu.phone + ', ' + stu.linkedin + ', '
-      + stu.school + ', ' + stu.major + ', ' + stu.grad_date + ', ' + stu.categories + ', ' + stu.location_prefs + ', '
+      + stu.school + ', ' + stu.major + ', ' + stu.grad_date + ', ' + stu.job_type + ', ' + new_categories + ', ' + new_locs + ', '
       + stu.interview_status + ', ' + stu.technical_score + ', ' + stu.behavioral_score + ', ' + stu.comments + '\n'
   })
   return csv
@@ -185,7 +198,6 @@ router.get("/reports/:id", async (req, res) => {
     let md = generateMd(student, school, major, categories, location_prefs)
     const mdFilename = 'reports/' + student._id + '.md'
     const pdfFilename = 'reports/' + student._id + '.pdf'
-    console.log("here")
     fs.writeFile(mdFilename, md, (err) => {
       if (err) throw err;
     })
@@ -201,39 +213,54 @@ router.get("/reports/:id", async (req, res) => {
 
 router.post("/reports/filtered", async (req, res) => {
   try {
-    const allStudents = await Student.find()
-    const allLocations = await Location.find()
-    const allCategories = await Category.find()
-    const allMajors = await Major.find()
-    const allSchools = await School.find()
-    const students = allStudents.filter((stu) => req.body.includes(stu._id))
-    students.forEach((stu) => {
-
-      new_location_prefs = ""
-      stu.location_prefs.forEach((loc) => {
-        l = allLocations.filter((aLoc) => aLoc._id == loc)[0]
-        new_location_prefs = new_location_prefs + l.city + " " + l.state + "; "
+    const students = []
+    for (let key in req.body) {
+      const student = req.body[key]
+      const new_categories = []
+      student.categories.forEach(async (c) => {
+        const cat = (await Category.findById(c)).category
+        new_categories.push(cat)
       })
-      stu.location_prefs = new_location_prefs.substring(0, new_location_prefs.length - 2)
-
-      new_categories = ""
-      stu.categories.forEach((cat) => {
-        c = allCategories.filter((aCat) => aCat._id == cat)[0]
-        new_categories = new_categories + c.category + '; '
+      
+      const new_location_prefs = []
+      student.location_prefs.forEach(async (l) => {
+        const loc = await Location.findById(l)
+        const city = loc.city
+        const state = loc.state
+        new_location_prefs.push(loc.city + ' ' + loc.state)
       })
-      stu.categories = new_categories.substring(0, new_categories.length - 2)
+      
+      const new_school = await School.findById(student.school)
+      const new_major = await Major.findById(student.major)
 
-      stu.major = allMajors.filter((maj) => maj._id == stu.major)[0].major
-      stu.school = allSchools.filter((sch) => sch._id == stu.school)[0].school
+      const new_student = {
+        email: student.email,
+        fname: student.fname,
+        lname: student.lname,
+        school: new_school.school,
+        major: new_major.major,
+        job_type: student.job_type,
+        categories: new_categories,
+        location_prefs: new_location_prefs,
+        grad_date: student.grad_date,
+        phone: student.phone,
+        linkedin: student.linkedin || "",
+        interview_status: student.interview_status,
+        technical_score: student.technical_score || "",
+        behavioral_score: student.behavioral_score || "",
+        comments: student.comments || ""
+      }
 
-      if (!stu.linkedin) {stu.linkedin = ""}
-      if (!stu.technical_score) {stu.technical_score = ""}
-      if (!stu.behavioral_score) {stu.behavioral_score = ""}
-      if (!stu.comments) {stu.comments = ""}
-    })
+      students.push(new_student)
+    }
+
+    console.log(students)
     let csv = generateCsv(students)
-    console.log(csv)
-    res.json
+    const filename = 'filtered_lists/' + Date.now() + '.csv'
+    fs.writeFile(filename, csv, (err) => {
+      if (err) throw err;
+    })
+    res.send(filename)
   } catch (err) {
     res.status(500).json({ error: 'Internal server error' })
   }
