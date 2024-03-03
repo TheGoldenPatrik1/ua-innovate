@@ -1,15 +1,31 @@
 import "../styles/StudentHome.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function() {
+	const params = new URLSearchParams(window.location.search)
+	const userID = params.get("id")
+
 	const steps = ['Pending Review', 'First Round', 'Final Round', 'Offer Sent', 'Hired']
-	const [complete, setComplete] = useState(steps.indexOf('Final Round'))
+	const [complete, setComplete] = useState(0)
+	const [userData, setUserData] = useState({})
+	
+	useEffect(() => {
+        const fetchStudent = async () => {
+            const response = await axios.get(`http://localhost:8080/api/students/${userID}`)
+			console.log(response.data)
+			setUserData(response.data)
+            setComplete(steps.indexOf(response.data.interview_status))
+        }
+        
+        if (userID) fetchStudent();
+    }, []);
 
 	const navigate = useNavigate()
 	const editButton = () => {
 		// navigate to student home
-		navigate('/student/app')
+		navigate('/student/app?id=' + userID)
 	}
 	const deleteButton = () => {
 		const confirmDelete = window.confirm('Are you sure you want to delete your application?');
@@ -35,7 +51,7 @@ export default function() {
 					</div>
 					<div className="step">
 					<br></br>
-					<h3>Thank you for applying to CGI! We will get back to you shortly.</h3>
+					<h3>{userData.fname ? `${userData.fname}, t` : 'T'}hank you for applying to CGI! We will get back to you shortly.</h3>
 					</div>
 					<div class="button-container">
 						<button class="styled-button-blue" onClick={editButton}>Edit Application</button>
