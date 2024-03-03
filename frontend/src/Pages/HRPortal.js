@@ -1,7 +1,7 @@
 import StudentData from '../HRPortal/StudentData';
 import Sidebar from '../HRPortal/Sidebar';
 import StudentWindow from '../HRPortal/StudentWindow';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forceUpdate } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/HRPortal.css";
 import axios from "axios";
@@ -20,6 +20,7 @@ function HRPortal() {
     const [studentData, setStudentData] = useState({});
     const [window, setWindow] = useState('');
     const [sideBarVisible, setSideBarVisible] = useState(true);
+    const [filters, setFilters] = useState({});
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -53,14 +54,90 @@ function HRPortal() {
         console.log(sideBarVisible);
         setSideBarVisible(!sideBarVisible);
     }
+
+    function filterUpdated(id, key, value) {
+        // console.log(id);
+        // console.log(key);
+        // console.log(value);
+        // console.log(students[0][key]);
+        let newFilters = filters
+        if(value) {
+            if(key in newFilters) {
+                newFilters[key].push(id);
+            } else {
+                newFilters[key] = [id];
+            }
+            
+            
+        } else {
+            console.log(filters);
+            const index = newFilters[key].indexOf(id);
+            newFilters[key].splice(index, 1);
+            if(newFilters[key].length === 0) {
+                delete newFilters[key];
+            }
+        }
+
+        console.log(studentData);
+            console.log(key)
+            console.log(id);
+            let newStudents = [];
+            
+            console.log(Object.keys(newFilters).length);
+            if(Object.keys(newFilters).length === 0) {
+                newStudents = studentData;
+            } else {
+                for(let i = 0; i < studentData.length; i++) {
+                    let addStudent = true;
+                    for(const [skey, value] of Object.entries(newFilters)) {
+                        let category = false
+                        for(let j = 0; j < value.length; j++) {
+                            
+                            if(skey === "job_type" || skey === "major") {
+                                console.log("Is " + studentData[i].fname + "[" + skey + "] = " +value[j] + "?");
+                                if(studentData[i][skey] === value[j]) {
+                                    console.log("Setting " + studentData[i].fname + " to true with category " + skey);
+                                    category = true;
+                                }
+                            } else if(skey === "categories" || skey === "location_prefs") {
+                                console.log("Does " + studentData[i].fname + "[" + skey + "] have " +value[j] + "? IndexOf = " + studentData[i][skey].indexOf(value[j]));
+                                if(studentData[i][skey].indexOf(value[j]) != -1) {
+                                    console.log("Setting " + studentData[i].fname + " to true with category " + skey);
+                                    category = true;
+                                }
+                            }
+                            
+                        }
+                        if(!category) {
+                            console.log("Setting " + studentData[i].fname + " to false with category " + skey);
+                            addStudent = false;
+                            break;
+                        } 
+                    }
+                    if(addStudent) {
+                        newStudents.push(studentData[i]);
+                    }
+                    
+                    
+                }
+            }
+            
+            console.log(newStudents);
+            setStudents(newStudents);
+            setFilters(newFilters);
+        
+    }
     const studentElements = [];
     const studentWindows = [];
+    console.log(students);
     for(var i = 0; i < students.length; i++) {
-        studentElements.push(<StudentData student={students[i]} parentCallback={handleCallback}/>)
+        studentElements.push(<StudentData student={students[i]} parentCallback={handleCallback} key={i}/>)
     }
+    console.log(studentElements);
+    
     return (
         <div class="portal">
-            <Sidebar visible={sideBarVisible}/>
+            <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated}/>
             <div id="main">
                 <button id="toggle-side-panel-button" onClick={toggleSideBarClick}>-</button>
             <div>
