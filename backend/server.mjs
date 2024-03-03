@@ -29,6 +29,7 @@ app.use('/api', categoryController)
 app.use('/api', locationController)
 app.use('/api', schoolController)
 app.use('/uploads', express.static('uploads'))
+app.use('/reports', express.static('reports'))
 
 passport.serializeUser(User.serializeUser()) // encodes data into the session
 passport.deserializeUser(User.deserializeUser()) // decodes data from the session
