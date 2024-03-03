@@ -12,7 +12,7 @@
 
 .login-container {
     width: 400px; /* Adjust the width of the box */
-    height: 300px; /* Adjust the height of the box */
+    height: 350px; /* Adjust the height of the box */
     background-color: rgb(243, 243, 243);
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -61,6 +61,9 @@
     font-size: 20px; /* Increase font size for better visibility */
   }
 
+  .button-margin{
+    margin-bottom: 15px;
+  }
 .divider {
     width: 100%; /* Set the width to fill the container */
     height: 1px; /* Set the height of the divider */
