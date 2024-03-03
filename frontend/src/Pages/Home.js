@@ -51,6 +51,10 @@ function Home() {
     const showQRCode = () => {
         navigate('qr')
     }
+    const forgotPWClick = () => {
+        if (!email || !email.length) return setActionText("Please specify an email address!")
+        navigate('password-reset')
+    }
     return (
       <div className="app">
         <h1 className="CGI-lettering">CGI</h1>
@@ -61,6 +65,7 @@ function Home() {
           <input type="pass" id="pw" name="pw"  placeholder="Password" value={pw} onChange={e => setPW(e.target.value)}/>
           <br/>
           <button className='button' onClick={loginClick}>Login</button>
+          <div><br/><text style={{textDecoration: 'underline'}} onClick={forgotPWClick}>Forgot your password?</text></div>
           <h3 className="divider"></h3>
           <button className='button button-margin' onClick={createAccountClick}>New Application</button>
           <button className='button button-margin' onClick={showQRCode}>Show QR Code</button>

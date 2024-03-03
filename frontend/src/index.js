@@ -12,6 +12,7 @@ import StudentHome from "./pages/StudentHome"
 import HRPortal from "./pages/HRPortal"
 import ErrorPage from "./pages/ErrorPage"
 import QRPortal from "./pages/QRPortal"
+import PasswordPortal from "./pages/PasswordPortal"
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: 'qr',
     element: <QRPortal/>
+  },
+  {
+    path: 'password-reset',
+    element: <PasswordPortal/>
   }
 ]);
 
