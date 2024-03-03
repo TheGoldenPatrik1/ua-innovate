@@ -126,3 +126,10 @@
 		flex: 0 0 100%; /* Set width of each form group to 100% for smaller screens */
 	}
 }
+
+@media (max-width: 500px) {
+	.application-form {
+		width: 90%;
+		margin: 0 auto;
+	}
+}

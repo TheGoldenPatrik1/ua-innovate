@@ -121,3 +121,10 @@
 	padding:  40px;
 }
 
+@media (max-width: 500px) {
+	.application-form {
+		width: 80%;
+		margin: 0 auto;
+	}
+}
+
