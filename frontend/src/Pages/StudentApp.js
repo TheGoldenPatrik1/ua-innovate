@@ -47,7 +47,7 @@ function StudentApp () {
     const [pwReq, setPWReq] = useState([])
     const [cpw, setCPW] = useState('')
     const [pwMatch, setPWMatch] = useState('')
-    const [hidePW, setHidePW] = useState(false)
+    const [editMode, setEditMode] = useState(false)
     const [phone, setPhone] = useState('')
     const [school, setSchool] = useState('')
     const [major, setMajor] = useState('')
@@ -67,7 +67,7 @@ function StudentApp () {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:8080/api/students/${userID}`)
             console.log(response.data)
-            setHidePW(true)
+            setEditMode(true)
             setUserData(response.data)
             setFname(response.data.fname)
             setLname(response.data.lname)
@@ -101,12 +101,44 @@ function StudentApp () {
 
     const submitHandler = () => {
         // verify input - this probably needs to be expanded
-        if (!fname || !lname || !email || (!hidePW && (!pw || !cpw || !pwMatch)) || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
+        if (!fname || !lname || !email || (!editMode && (!pw || !cpw || !pwMatch)) || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
             return alert('Required field missing!')
         }
 
         if (linkedIn && !linkedIn.match(/^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/)) {
             return alert('LinkedIn URL is invalid!')
+        }
+
+        if (editMode) {
+            const params = {
+                email: email,
+                fname: fname,
+                lname: lname,
+                school: school,
+                major: major,
+                job_type: workPref,
+                categories: depPref,
+                location_prefs: locPref,
+                grad_date: graduation,
+                phone: phone
+            }
+            if (linkedIn) params.linkedin = linkedIn
+            const editParams = {}
+            for (let key in params) {
+                if (Array.isArray(params[key])) {
+                    editParams[key] = params[key]
+                } else if (params[key] !== userData[key]) {
+                    editParams[key] = params[key]
+                }
+            }
+            console.log(editParams)
+            axios.put('http://localhost:8080/api/students/' + userID, editParams).then(r => {
+                console.log(r)
+                navigate('/student/home?id=' + userID)
+            }).catch(e => {
+                console.log(e)
+            })
+            return
         }
 
         // input is verified; now write to database
@@ -192,10 +224,10 @@ function StudentApp () {
                 <p className="form-group full-width">
                     <label htmlFor="email">Email Address</label>
                     <br/>
-                    <input type="email" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                    <input type="email" id="email" disabled={editMode} name="email" value={email} onChange={e => setEmail(e.target.value)}/>
                 </p>
             </div>
-            {!hidePW && <div className="form-row">
+            {!editMode && <div className="form-row">
                 <p className="form-group">
                     <label htmlFor="pw">Password</label>
                     <br/>
