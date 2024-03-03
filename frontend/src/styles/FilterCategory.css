@@ -1,6 +1,7 @@
 .category-title {
     display: flex;
     column-gap: 5px;
+    margin-right: 10px;
 }
 
 .category-name {
@@ -9,4 +10,15 @@
 
 .filter-category {
     margin: 5px;
+}
+
+.side-divider {
+    background-color: #dedede;
+	margin-left: 10%;
+    justify-content: center;
+    align-content: center;
+    width: 80%; /* Set the width to fill the container */
+    height: 1px; /* Set the height of the divider */
+    background-color: #ccc; /* Set the color of the divider */
+    margin: 15px 0;
 }

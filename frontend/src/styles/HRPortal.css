@@ -83,7 +83,7 @@
     transition-property: background-color;
 }
 
-.white:hover, .gray:hover {
+.white:hover, .gray:hover, .white:disabled {
     background-color: #ffffff;
     color:#696969;
     border:2px solid #696969;
@@ -104,16 +104,16 @@
     left: 0px;
     top: 0;
     cursor: pointer;
-    background-color: #696969;
-    border: 2px solid #696969;
-    color: #ffffff;
+    background-color: #dedede;
+    border: 2px solid #dedede;
+    color: black;
     border-radius: 10px;
     margin-left: -8px;
 }
 
 #toggle-side-panel-button:hover {
-    background-color: #ffffff;
-    color:#696969;
+    background-color: #696969;
+    color:#ffffff;
     border:2px solid #696969;
     transition-duration: 0.3s;
     transition-property: background-color;
