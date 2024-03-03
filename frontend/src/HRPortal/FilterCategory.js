@@ -1,11 +1,21 @@
 import "../styles/FilterCategory.css"
 
-function FilterCategory({name, data}) {
+function FilterCategory({name, data, onChange}) {
     var showCategory = false;
     const options = [];
     const catName = "category-" + name.replace(/\s/g, '');
+    const catToKeyMap = {
+        "Job Type" : "job_type",
+        "Majors" : "major",
+        "Departments" : "categories",
+        "Locations" : "location_prefs"
+    }
     for(let i = 0; i < data.length; i++) {
-        options.push(<div className={catName} style={{display: "none"}}><input type="checkbox" value={data[i][0]}/><label>{data[i][1]}</label></div>)
+        options.push(<div className={catName} style={{display: "none"}}><input type="checkbox" value={data[i][0]} onChange={updateFilter}/><label>{data[i][1]}</label></div>)
+    }
+
+    function updateFilter(e) {
+        onChange(e.target.value, catToKeyMap[name], e.target.checked);
     }
 
     const ToggleCheckboxes = () => {

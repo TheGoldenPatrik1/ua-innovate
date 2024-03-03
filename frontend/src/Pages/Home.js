@@ -59,7 +59,7 @@ function Home() {
           <br/>
           <button className='button' onClick={loginClick}>Login</button>
           <h3 className="divider"></h3>
-          <button className='button' onClick={createAccountClick}>New Application</button>
+          <button className='button button-margin' onClick={createAccountClick}>New Application</button>
           <section className='actionText'>{actionText}</section>
         </header>
       </div>
