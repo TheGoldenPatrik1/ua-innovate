@@ -8,11 +8,9 @@ class StudentWindow extends React.Component{
         this.state = {
             student: props.student,
             edit: false,
-            email : props.student.email,
-            rating1 : props.student.rating1,
-            rating2 : props.student.rating2,
-            rating3 : props.student.rating3
+            
         }
+        console.log(props.student);
     }
 
     closeStudentWindow = () => {
@@ -23,10 +21,10 @@ class StudentWindow extends React.Component{
             //TODO: Save functionality
             this.setState({edit:false});
             const editStudent = this.state.student;
-            editStudent.email = this.state.email;
-            editStudent.rating1 = this.state.rating1;
-            editStudent.rating2 = this.state.rating2;
-            editStudent.rating3 = this.state.rating3;
+            // editStudent.email = this.state.email;
+            // editStudent.rating1 = this.state.rating1;
+            // editStudent.rating2 = this.state.rating2;
+            // editStudent.rating3 = this.state.rating3;
             this.setState({student:editStudent});
         } else {
             //Edit
@@ -66,13 +64,13 @@ class StudentWindow extends React.Component{
                         <span class="close" id="student-modal-close" onClick={this.closeStudentWindow}>&times;</span>
                         <button class="modal-header-btn" onClick={this.editBtnClick}>{this.state.edit ? "Save" : "Edit"}</button>
                         <button class="modal-header-btn" onClick={this.delBtnClick}>{this.state.edit ? "Cancel" : "Delete"}</button>
-                        <h2>{this.props.student.name}</h2>
+                        {/* <h2>{this.state.student.name}</h2> */}
                     </div>
                     <div id="student-window" class="modal-body">
-                        <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
+                        {/* <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Rating 1: " value={this.state.rating1} edit={this.state.edit} inputType="number" stateKey="rating1" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Rating 2: " value={this.state.rating2} edit={this.state.edit} inputType="number" stateKey="rating2" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 3: " value={this.state.rating3} edit={this.state.edit} inputType="number" stateKey="rating3" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Rating 3: " value={this.state.rating3} edit={this.state.edit} inputType="number" stateKey="rating3" parentCallback={this.onChangeCallback}/> */}
                     </div>
                 </div>
             </div>

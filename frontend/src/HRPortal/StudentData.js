@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "../styles/StudentData.css"
 
-function StudentData({student, parentCallback}) {
+function StudentData({num, student, parentCallback}) {
 
     const openStudentWindow = () => {
-        parentCallback(student.id);
+        parentCallback(num);
     }
 
         return (

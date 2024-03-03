@@ -37,6 +37,7 @@ function HRPortal() {
         if(childData === -1) {
             setWindow('') 
         } else {
+            console.log(childData);
             setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} />)
         }
         
@@ -131,7 +132,7 @@ function HRPortal() {
     const studentWindows = [];
     console.log(students);
     for(var i = 0; i < students.length; i++) {
-        studentElements.push(<StudentData student={students[i]} parentCallback={handleCallback} key={i}/>)
+        studentElements.push(<StudentData student={students[i]} parentCallback={handleCallback} key={i} num={i}/>)
     }
     console.log(studentElements);
     
