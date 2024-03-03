@@ -315,7 +315,7 @@ function StudentApp () {
 
             <div className="form-row">
                 <p>
-                    <label htmlFor="workpref">Job Preference</label>
+                    <label htmlFor="workpref">Job Type Preference</label>
                     <br/>
                     <input ref={internshipRef} type="radio" id="Internship" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
                     <label htmlFor="Internship">Internship</label>
@@ -332,7 +332,7 @@ function StudentApp () {
 
             <div className="checkbox">
                 <p className="checkbox-margin">
-                    <label htmlFor="deppref">Department Preference</label>
+                    <label htmlFor="deppref">Department Preferences</label>
                     <br/>
                         {departments.map((v, i) => {
                             return (
@@ -357,7 +357,7 @@ function StudentApp () {
                     <br/>
                 </p>
                 <p className="checkbox-margin">
-                    <label htmlFor="locpref">Top 3 Location Preference</label>
+                    <label htmlFor="locpref">Top 3 Location Preferences</label>
                     <br/>
                         {locations.map((v, i) => {
                             return (
