@@ -1,21 +1,22 @@
-import "../styles/StudentHome.css"
+import "../styles/StudentHome.css";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function() {
+	const steps = ['Pending Review', 'First Round', 'Final Round', 'Offer Sent', 'Hired']
+	const [complete, setComplete] = useState(steps.indexOf('Final Round'))
+
 	const navigate = useNavigate()
 	const editButton = () => {
 		// navigate to student home
 		navigate('/student/app')
 	}
 	const deleteButton = () => {
-		var confirmDelete = window.confirm('Are you sure you want to delete?');
+		const confirmDelete = window.confirm('Are you sure you want to delete your application?');
 		// navigate to student home
-		if (confirmDelete){
-		navigate('/');
-		}
+		if (confirmDelete) navigate('/')
 	}
+
     return (
         <div className="back">
 			<div className="application-form">
@@ -23,30 +24,18 @@ export default function() {
 				<h3 style={{textAlign: 'center'}}>Application Progress</h3>
 					<div className="divider"></div>
 					<div id="stepProgressBar">
-					<div className="step">
-						<p>Pending Review</p>
-						<div className="bullet completed">1</div>
-					</div>
-					<div className="step">
-						<p>First Round</p>
-						<div className="bullet completed">2</div>
-					</div>
-					<div className="step">
-						<p>Final Round</p>
-						<div className="bullet">3</div>
-					</div>
-					<div className="step">
-						<p>Offer Sent</p>
-						<div className="bullet">4</div>
-					</div>
-					<div className="step">
-						<p>Hired</p>
-						<div className="bullet">5</div>
-					</div>
+					{steps.map((v, i) => {
+						return (
+							<div className="step">
+								<p>{v}</p>
+								<div className={"bullet" + (i <= complete ? " completed" : "")}>{i + 1}</div>
+							</div>
+						)
+					})}
 					</div>
 					<div className="step">
 					<br></br>
-					<h3>Thank you for applying to CGI! We will get back to you shortly</h3>
+					<h3>Thank you for applying to CGI! We will get back to you shortly.</h3>
 					</div>
 					<div class="button-container">
 						<button class="styled-button-blue" onClick={editButton}>Edit Application</button>
