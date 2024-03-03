@@ -138,10 +138,6 @@ function HRPortal() {
     }
 
     function filterUpdated(id, key, value) {
-        // console.log(id);
-        // console.log(key);
-        // console.log(value);
-        // console.log(students[0][key]);
         let newFilters = filters
         if(value) {
             if(key in newFilters) {
@@ -185,44 +181,48 @@ function HRPortal() {
     console.log(studentElements);
     
     return (
-        <div class="portal">
-            <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated} constants={constants}/>
-            <div id="main">
-                <button id="toggle-side-panel-button" onClick={toggleSideBarClick}>-</button>
-            <div>
-                <h1>HR Portal</h1>
-                <button id="create-new-button" onClick={createApplication}>Create New</button>
-                <button id="logout-button" onClick={logoutClick}>Log Out</button>
-            </div>
-            <input type="text" placeholder="search" value={search} onChange={(e) => {
-                const criteria = e.target.value
-                setSearch(criteria)
-                console.log(criteria)
-                const newStudents = []
-                for (let i = 0; i < studentData.length; i++) {
-                    if (studentData[i].lname.toLowerCase().includes(criteria.toLowerCase())) newStudents.push(studentData[i])
-                    else if (studentData[i].fname.toLowerCase().includes(criteria.toLowerCase())) newStudents.push(studentData[i])
-                }
-                setStudents(applyFilters(newStudents, filters))
-            }}/>
-            <table id="student-table">
-                {/*TODO: figure out how to include table headers later */}
-                <tr className="heading-row">
-                    <th><span>Name</span></th>
-                    <th style={{width: "50%"}}><span>Grad Date</span></th>
-                    <th><span>Application Status</span></th>
-                    <th><span>Technical Score</span></th>
-                    <th><span>Behavioral Score</span></th>
-                </tr>
+        <div className='hr-portal'>
+            <div></div>
+            <div class="portal-main">
+                <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated} constants={constants}/>
+                <div id="main">
+                    <button id="toggle-side-panel-button" onClick={toggleSideBarClick}>-</button>
+                <div>
+                    <h1>HR Portal</h1>
+                    <button id="create-new-button" onClick={createApplication}>Create New</button>
+                    <button id="logout-button" onClick={logoutClick}>Log Out</button>
+                </div>
+                <input type="text" placeholder="search" value={search} onChange={(e) => {
+                    const criteria = e.target.value
+                    setSearch(criteria)
+                    console.log(criteria)
+                    const newStudents = []
+                    for (let i = 0; i < studentData.length; i++) {
+                        if (studentData[i].lname.toLowerCase().includes(criteria.toLowerCase())) newStudents.push(studentData[i])
+                        else if (studentData[i].fname.toLowerCase().includes(criteria.toLowerCase())) newStudents.push(studentData[i])
+                    }
+                    setStudents(applyFilters(newStudents, filters))
+                }}/>
+                <table id="student-table">
+                    {/*TODO: figure out how to include table headers later */}
+                    <tr className="heading-row">
+                        <th><span>Name</span></th>
+                        <th style={{width: "50%"}}><span>Grad Date</span></th>
+                        <th><span>Application Status</span></th>
+                        <th><span>Technical Score</span></th>
+                        <th><span>Behavioral Score</span></th>
+                    </tr>
+                    
+            
+                    {studentElements}
+                </table>
+                {window}
                 
-        
-                {studentElements}
-            </table>
-            {window}
-            
+                </div>
+                
             </div>
-            
         </div>
+        
         
     );
     
