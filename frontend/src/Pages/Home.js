@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './../styles/Home.css';
+import axios from 'axios';
 
 function Home() {
     const [email, setEmail] = useState('')
@@ -9,7 +10,30 @@ function Home() {
     const loginClick = () => {
         if (!email || !email.length) return alert("Please specify an email address!")
         if (!pw || !pw.length) return alert("Please specify a password!")
-        navigate("/hr")
+        const params = {
+            username: email,
+            password: pw
+        }
+        console.log(params)
+        axios.post('http://localhost:8080/login', params).then(r => {
+            if (r.data === 'success') {
+                axios.get('http://localhost:8080/api/users/' + email).then(r2 => {
+                    if (r2.data === 'admin') {
+                        navigate("/hr")
+                    } else {
+                        navigate('/student/home?id=' + r2.data)
+                    }
+                }).catch(e => {
+                    console.log(e)
+                    alert('Login failed')
+                })
+            } else {
+                alert('Login failed')
+            }
+        }).catch(e => {
+            console.log(e)
+            alert('Login failed')
+        })
     }
     const createAccountClick = () => {
         navigate("/student/app")

@@ -1,6 +1,7 @@
 .portal {
     display: flex;
     column-gap: 10px;
+    flex-direction: row;
 }
 
 #student-table {
@@ -16,6 +17,17 @@
 
 #main {
     width: 100%;
+}
+
+#create-new-button, #logout-button {
+    float: right;
+}
+
+#toggle-side-panel-button {
+    border-radius: 50%;
+    position: absolute;
+    left: 0px;
+    top: 0;
 }
 
 

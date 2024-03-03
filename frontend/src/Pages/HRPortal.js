@@ -1,56 +1,79 @@
 import StudentData from '../HRPortal/StudentData';
 import Sidebar from '../HRPortal/Sidebar';
 import StudentWindow from '../HRPortal/StudentWindow';
-import React from 'react';
+import React, { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../styles/HRPortal.css"
 
-class HRPortal extends React.Component {
-    state = {
+function HRPortal() {
+    const state = {
         students:GetStudents(),
-        window: ''
+        window: '',
     }
-    handleCallback = (childData) => {
+
+    
+
+    const [students, setStudents] = useState(GetStudents());
+    const [window, setWindow] = useState('');
+    const [sideBarVisible, setSideBarVisible] = useState(true);
+
+    const handleCallback = (childData) => {
         if(childData == -1) {
-            this.setState({window:''}) 
+            setWindow('') 
         } else {
-            this.setState({window: <StudentWindow student={this.state.students[childData]} parentCallback={this.handleCallback} />})
+            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} />)
         }
         
     }
-    render() {
-        
-        const studentElements = [];
-        const studentWindows = [];
-        for(var i = 0; i < this.state.students.length; i++) {
-            studentElements.push(<StudentData student={this.state.students[i]} parentCallback={this.handleCallback}/>)
-        }
-        return (
-            <div class="portal">
-              <Sidebar />
-              <div id="main">
+
+    const navigate = useNavigate();
+    function createApplication() {
+        navigate("/student/app");
+    }
+    function logoutClick() {
+        navigate("/");
+    }
+
+    function toggleSideBarClick() {
+        console.log(sideBarVisible);
+        setSideBarVisible(!sideBarVisible);
+    }
+    const studentElements = [];
+    const studentWindows = [];
+    for(var i = 0; i < students.length; i++) {
+        studentElements.push(<StudentData student={students[i]} parentCallback={handleCallback}/>)
+    }
+    return (
+        <div class="portal">
+            <Sidebar visible={sideBarVisible}/>
+            <div id="main">
+                <button id="toggle-side-panel-button" onClick={toggleSideBarClick}>-</button>
+            <div>
                 <h1>HR Portal</h1>
-                <input type="text" placeholder="search"/>
-                <table id="student-table">
-                    {/*TODO: figure out how to include table headers later */}
-                    <tr className="heading-row">
-                        <th><span>Name</span></th>
-                        <th style={{width: "50%"}}><span>Email</span></th>
-                        <th><span>Rating 1</span></th>
-                        <th><span>Rating 2</span></th>
-                        <th><span>Rating 3</span></th>
-                    </tr>
-                    
-            
-                    {studentElements}
-                </table>
-                {this.state.window}
+                <button id="create-new-button" onClick={createApplication}>Create New</button>
+                <button id="logout-button" onClick={logoutClick}>Log Out</button>
+            </div>
+            <input type="text" placeholder="search"/>
+            <table id="student-table">
+                {/*TODO: figure out how to include table headers later */}
+                <tr className="heading-row">
+                    <th><span>Name</span></th>
+                    <th style={{width: "50%"}}><span>Email</span></th>
+                    <th><span>Rating 1</span></th>
+                    <th><span>Rating 2</span></th>
+                    <th><span>Rating 3</span></th>
+                </tr>
                 
-              </div>
-              
+        
+                {studentElements}
+            </table>
+            {window}
+            
             </div>
             
-          );
-    }
+        </div>
+        
+    );
     
 }
 export default HRPortal;
