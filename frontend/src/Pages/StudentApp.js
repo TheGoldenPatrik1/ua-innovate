@@ -386,7 +386,7 @@ function StudentApp () {
                 </p>
             </div>
             <p>
-                <button onClick={submitHandler}>Submit</button>
+                <button className="button_test "onClick={submitHandler}>Submit</button>
             </p>
             </div>
         </div>
