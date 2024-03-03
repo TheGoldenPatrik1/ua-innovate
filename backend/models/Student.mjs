@@ -14,7 +14,8 @@ const studentSchema = new mongoose.Schema({
   linkedin: {type: String, required: false},
   interview_status: {type: String, required: true, enum: [
     "Pending Review", "First Round", "Final Round", "Offer Sent", "Hired"]},
-  interest: {type: Number, required: false},
+  technical_score: {type: Number, required: false},
+  behavioral_score: {type: Number, required: false},
   comments: {type: String, required: false},
   resume: {type: String, required: false}
 });
