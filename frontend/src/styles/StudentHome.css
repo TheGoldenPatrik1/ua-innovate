@@ -6,26 +6,65 @@
 	margin:  0  auto;
 	margin-bottom:  40px;
 }
-
-/* .background {
+.test {
+	margin-left: 2%;
+}
+.back {
     background-image: linear-gradient(to right, #5236ab, #e31937);
     display: flex;
     min-height: 100vh;
     justify-content: center;
-    align-items: center;    
-    margin: 0;
     padding: 0;
     height: 100%;
-  } */
+  }
+
+.application-form {
+	width: 70%;
+	margin: 50px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.divider {
+	background-image: linear-gradient(to right, #e31937, #5236ab);
+	margin-left: 25%;
+    justify-content: center;
+    width: 50%; /* Set the width to fill the container */
+    height: 2px; /* Set the height of the divider */
+    background-color: #ccc; /* Set the color of the divider */
+  }
+
+.button-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.styled-button-red {
+	margin: 0 15px;
+	padding: 10px 40px;
+	border: none;
+	border-radius: 5px;
+	font-size: 20px;
+	color: #ffffff;
+	cursor: pointer;
+	background-color: #E31937;
+}
+.styled-button-blue {
+	margin: 0 15px;
+	padding: 10px 40px;
+	border: none;
+	border-radius: 5px;
+	font-size: 20px;
+	color: #ffffff;
+	cursor: pointer;
+	background-color: #5236ab;
+}
 
 .step  {
     text-align:  center;
 }
-
-.step-text  {
-    margin-bottom:  10px;
-}
-
 
 .bullet {
 	border: 1px solid #E31937;

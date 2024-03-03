@@ -38,7 +38,7 @@ function StudentApp () {
 
     const submitHandler = () => {
         // verify input - this probably needs to be expanded
-        if (!resume || !fname || !lname || !email || !phone || !major || !graduation || !workpref) {
+        if (resume || !fname || !lname || !email || !phone || !major || !graduation || !workpref) {
             return alert('Required field missing!')
         }
 
