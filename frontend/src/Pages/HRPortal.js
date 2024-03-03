@@ -47,6 +47,14 @@ function HRPortal() {
             });
             setWindowConstants(windowConstants);
         }
+        const fetchSchools = async () => {
+            const response = await axios.get(`http://localhost:8080/api/schools`);
+            windowConstants["Schools"] = {}
+            response.data.forEach((v, i) => {
+                windowConstants["Schools"][v._id] = v.school;
+            });
+            setWindowConstants(windowConstants);
+        }
         const fetchDepartments = async () => {
             const response = await axios.get(`http://localhost:8080/api/categories`);
             constants["Departments"] = response.data.map(v =>  [v._id, v.category]);
@@ -69,6 +77,7 @@ function HRPortal() {
         }
 
         fetchMajors();
+        fetchSchools();
         fetchDepartments();
         fetchLocations();
 

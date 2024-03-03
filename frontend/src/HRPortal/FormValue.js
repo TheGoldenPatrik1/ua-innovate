@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function FormValue({label, value, edit, inputType, stateKey, parentCallback}) {
+function FormValue({label, value, edit, inputType, stateKey, parentCallback, mappedValue}) {
 
     function changeValue(e) {
         value = e.target.value;
@@ -9,7 +9,7 @@ function FormValue({label, value, edit, inputType, stateKey, parentCallback}) {
 
     return (
         <div>
-            <label>{label}</label> {edit ? <input type={inputType} onChange={changeValue} value={value}/> : <span>{value}</span>}
+            <label>{label}</label> {edit ? <input type={inputType} onChange={changeValue} value={value}/> : <span>{mappedValue || value}</span>}
             <div style={{display:"none"}}><span>{stateKey}</span></div>
         </div>
     );

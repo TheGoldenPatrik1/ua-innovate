@@ -23,7 +23,6 @@ class StudentWindow extends React.Component{
             linkedin: props.student.linkedin,
             constants: props.constants
         }
-        console.log('hi', this.state.constants);
     }
 
     closeStudentWindow = () => {
@@ -88,8 +87,8 @@ class StudentWindow extends React.Component{
                         <FormValue label="Last Name: " value={this.state.lname} edit={this.state.edit} inputType="text" stateKey="lname" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Phone Number: " value={this.state.phone} edit={this.state.edit} inputType="number" stateKey="phone" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="School: " value={this.state.school} edit={this.state.edit} inputType="text" stateKey="school" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Major: " value={this.state.major} edit={this.state.edit} inputType="text" stateKey="major" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="School: " mappedValue={this.state.constants['Schools'][this.state.school]} value={this.state.school} edit={this.state.edit} inputType="text" stateKey="school" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Major: " mappedValue={this.state.constants['Majors'][this.state.major]} value={this.state.major} edit={this.state.edit} inputType="text" stateKey="major" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Graduation Date: " value={this.state.gradDate} edit={this.state.edit} inputType="date" stateKey="gradDate" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Job Type: " value={this.state.jobType} edit={this.state.edit} inputType="text" stateKey="jobType" parentCallback={this.onChangeCallback}/>
                         <FormValue label="LinkedIn: " value={this.state.linkedin} edit={this.state.edit} inputType="text" stateKey="linkedin" parentCallback={this.onChangeCallback}/>
