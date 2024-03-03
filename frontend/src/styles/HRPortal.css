@@ -141,4 +141,17 @@
     padding: 10px 20px;
   }
 
+  @media (max-width: 700px) {
+	#stepProgressBar {
+		display: none;
+	}
+	#stepProgressBarSmall {
+		display: block;
+	}
+	.styled-button {
+		padding: 5px 20px;
+		font-size: 16px;
+	}
+}
+
   

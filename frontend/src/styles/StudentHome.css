@@ -6,6 +6,9 @@
 	margin:  0  auto;
 	margin-bottom:  40px;
 }
+#stepProgressBarSmall {
+	display: none;
+}
 .test {
 	margin-left: 2%;
 }
@@ -125,6 +128,19 @@
 	.application-form {
 		width: 80%;
 		margin: 0 auto;
+	}
+}
+
+@media (max-width: 700px) {
+	#stepProgressBar {
+		display: none;
+	}
+	#stepProgressBarSmall {
+		display: block;
+	}
+	.styled-button {
+		padding: 5px 20px;
+		font-size: 16px;
 	}
 }
 

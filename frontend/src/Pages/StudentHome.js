@@ -54,7 +54,7 @@ export default function() {
 				<h1 className="test">Candidate Home</h1>
 				<h3 style={{textAlign: 'center'}}>Application Progress</h3>
 					<div className="divider"></div>
-					<div id="stepProgressBar">
+					<div id="stepProgressBar" class="big-screen">
 					{steps.map((v, i) => {
 						return (
 							<div className="step">
@@ -63,6 +63,9 @@ export default function() {
 							</div>
 						)
 					})}
+					</div>
+					<div id="stepProgressBarSmall" class="small-screen">
+						<div><h4 style={{textAlign: 'center'}}>{steps[complete]}</h4></div>
 					</div>
 					<div className="step">
 					<br></br>
