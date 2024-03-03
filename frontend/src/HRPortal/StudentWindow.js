@@ -135,7 +135,7 @@ class StudentWindow extends React.Component{
                     <div id="student-window" class="modal-body">
                         <FormValue label="First Name: " value={this.state.fname} edit={this.state.edit} inputType="text" stateKey="fname" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Last Name: " value={this.state.lname} edit={this.state.edit} inputType="text" stateKey="lname" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="email" stateKey="email" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Phone Number: " value={this.state.phone} edit={this.state.edit} inputType="number" stateKey="phone" parentCallback={this.onChangeCallback}/>
                         <FormValue label="School: " value={this.state.constants['Schools'][this.state.school]} edit={this.state.edit} inputType="text" stateKey="school" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Major: " value={this.state.constants['Majors'][this.state.major]} edit={this.state.edit} inputType="text" stateKey="major" parentCallback={this.onChangeCallback}/>
