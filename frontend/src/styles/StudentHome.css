@@ -2,7 +2,7 @@
 	display:  flex;
 	justify-content:  space-between;
 	align-items:  flex-end;
-	width:  700px;
+	width:  500px;
 	margin:  0  auto;
 	margin-bottom:  40px;
 }
@@ -41,7 +41,7 @@
 	align-items: center;
 	justify-content: center;
 }
-.styled-button-red {
+.styled-button {
 	margin: 0 15px;
 	padding: 10px 40px;
 	border: none;
@@ -49,7 +49,16 @@
 	font-size: 20px;
 	color: #ffffff;
 	cursor: pointer;
-	background-color: #E31937;
+}
+
+.blue {
+	background-color: #5236ab;
+}
+.red {
+	background-color: #e31937;
+}
+.white {
+	background-color: #8b8b8b;
 }
 .styled-button-blue {
 	margin: 0 15px;
@@ -89,10 +98,10 @@
 .bullet.completed::after {
 	content: '';
 	position: absolute;
-	right: -110px;
+	right: -80px;
 	bottom: 10px;
 	height: 1px;
-	width: 75px;
+	width: 60px;
 	background-color: #E31937;
 }
 
