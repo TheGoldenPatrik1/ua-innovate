@@ -23,6 +23,7 @@ function HRPortal() {
     const [filters, setFilters] = useState({});
     const [search, setSearch] = useState('');
     const [constants, setConstants] = useState({});
+    const [windowConstants, setWindowConstants] = useState({});
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -40,16 +41,31 @@ function HRPortal() {
             const response = await axios.get(`http://localhost:8080/api/majors`);
             constants["Majors"] = response.data.map(v =>  [v._id, v.major]);
             setConstants(constants);
+            windowConstants["Majors"] = {}
+            response.data.forEach((v, i) => {
+                windowConstants["Majors"][v._id] = v.major;
+            });
+            setWindowConstants(windowConstants);
         }
         const fetchDepartments = async () => {
             const response = await axios.get(`http://localhost:8080/api/categories`);
             constants["Departments"] = response.data.map(v =>  [v._id, v.category]);
             setConstants(constants);
+            windowConstants["Departments"] = {}
+            response.data.forEach((v, i) => {
+                windowConstants["Departments"][v._id] = v.category;
+            });
+            setWindowConstants(windowConstants);
         }
         const fetchLocations = async () => {
             const response = await axios.get(`http://localhost:8080/api/locations`);
             constants["Locations"] = response.data.map(v =>  [v._id, v.city + ", " + v.state]);
             setConstants(constants);
+            windowConstants["Locations"] = {}
+            response.data.forEach((v, i) => {
+                windowConstants["Locations"][v._id] = v.city + ", " + v.state;
+            });
+            setWindowConstants(windowConstants);
         }
 
         fetchMajors();
@@ -65,7 +81,7 @@ function HRPortal() {
             setWindow('') 
         } else {
             console.log(childData);
-            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={constants}/>)
+            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={windowConstants}/>)
         }
         
     }

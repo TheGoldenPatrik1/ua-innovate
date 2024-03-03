@@ -23,7 +23,7 @@ class StudentWindow extends React.Component{
             linkedin: props.student.linkedin,
             constants: props.constants
         }
-        console.log(this.state.constants);
+        console.log('hi', this.state.constants);
     }
 
     closeStudentWindow = () => {
