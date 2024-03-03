@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import FormValue from './FormValue';
-import './StudentWindow.css';
+import '../styles/StudentWindow.css';
 
 class StudentWindow extends React.Component{
     constructor(props) {

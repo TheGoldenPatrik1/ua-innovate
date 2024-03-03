@@ -2,7 +2,7 @@ import StudentData from '../HRPortal/StudentData';
 import Sidebar from '../HRPortal/Sidebar';
 import StudentWindow from '../HRPortal/StudentWindow';
 import React from 'react';
-import "./HRPortal.css"
+import "../styles/HRPortal.css"
 
 class HRPortal extends React.Component {
     state = {

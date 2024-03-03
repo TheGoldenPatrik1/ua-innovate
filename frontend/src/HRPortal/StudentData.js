@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./StudentData.css"
+import "../styles/StudentData.css"
 
 class StudentData extends React.Component {
 
