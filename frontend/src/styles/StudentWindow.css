@@ -24,7 +24,7 @@
 
 .student-modal-header {
     padding: 2px 16px;
-    background-color: #609dff;
+    background-image: linear-gradient(to right, #5236ab, #e31937);
     color: white;
 }
 
@@ -42,7 +42,7 @@
     cursor: pointer;
 }
 
-.modal-header-btn {
+.modal-footer-btn {
     float: right
 }
 
@@ -59,3 +59,61 @@
     animation-name: animatetop;
     animation-duration: 0.4s
   }
+
+.student-modal-footer {
+    padding: 2px 16px;
+    background-color: #fefefe;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.button-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.blue-hover:hover {
+	background-color: #5236ab;
+    border:2px solid #5236ab;
+    color:#dedede;
+}
+.red-hover:hover {
+	background-color: #e31937;
+    border:2px solid #e31937;
+    color:#dedede;
+}
+
+
+.blue-hover {
+    background-color: transparent;
+    color:#5236ab;
+    
+    border:2px solid #5236ab;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+}
+
+.red-hover {
+    background-color: #ffffff;
+    color:#e31937;
+    border:2px solid #e31937;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+}
+.modal-styled-button {
+	margin: 0 15px;
+	padding: 10px 40px;
+	border-radius: 5px;
+	font-size: 20px;
+	cursor: pointer;
+    background-color: #dfdfdf;
+    color:#ffffff
+}
+
+#student-window {
+    display:grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 10px;
+}
