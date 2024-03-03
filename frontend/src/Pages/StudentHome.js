@@ -32,6 +32,9 @@ export default function() {
 		// navigate to student home
 		if (confirmDelete) navigate('/')
 	}
+	const logoutButton = () => {
+		navigate('/')
+	}
 
     return (
         <div className="back">
@@ -54,9 +57,13 @@ export default function() {
 					<h3>{userData.fname ? `${userData.fname}, t` : 'T'}hank you for applying to CGI! We will get back to you shortly.</h3>
 					</div>
 					<div class="button-container">
-						<button class="styled-button-blue" onClick={editButton}>Edit Application</button>
+						<button class="styled-button blue" onClick={editButton}>Edit Application</button>
 						<div class="spacer"></div>
-						<button class="styled-button-red" onClick={deleteButton}>Delete Application</button>
+						<button class="styled-button red" onClick={deleteButton}>Delete Application</button>
+					</div>
+					<br></br>
+					<div class="button-container">
+						<button class="styled-button white" onClick={logoutButton}>Logout</button>
 					</div>
 			</div>
         </div>

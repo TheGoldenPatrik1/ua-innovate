@@ -1,4 +1,4 @@
-import "./Sidebar.css"
+import "../styles/Sidebar.css"
 import FilterCategory from "./FilterCategory";
 
 function Sidebar() {

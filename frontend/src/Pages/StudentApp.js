@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import '../styles/StudentApp.css'
 
 function StudentApp () {
+    const params = new URLSearchParams(window.location.search)
+	const userID = params.get("id")
+
     const [schools, setSchools] = useState([]);
     const [majors, setMajors] = useState([]);
     const [departments, setDepartments] = useState([]);
@@ -33,7 +36,7 @@ function StudentApp () {
         fetchMajors();
         fetchDepartments();
         fetchLocations();
-    }, []);
+    }, [])
 
 
     const [resume, setResume] = useState('')
@@ -44,6 +47,7 @@ function StudentApp () {
     const [pwReq, setPWReq] = useState([])
     const [cpw, setCPW] = useState('')
     const [pwMatch, setPWMatch] = useState('')
+    const [hidePW, setHidePW] = useState(false)
     const [phone, setPhone] = useState('')
     const [school, setSchool] = useState('')
     const [major, setMajor] = useState('')
@@ -54,6 +58,43 @@ function StudentApp () {
     const [locsChecked, setLocsChecked] = useState(new Array(100).fill(false))
     const [locPref, setLocPref] = useState([])
     const [linkedIn, setLinkedIn] = useState('')
+
+    const internshipRef = useRef(null)
+    const fullTimeRef = useRef(null)
+
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(`http://localhost:8080/api/students/${userID}`)
+            console.log(response.data)
+            setHidePW(true)
+            setUserData(response.data)
+            setFname(userData.fname)
+            setLname(userData.lname)
+            setEmail(userData.email)
+            setPhone(userData.phone)
+            setSchool(userData.school)
+            setMajor(userData.major)
+            setGraduation(userData.grad_date)
+            setWorkPref(userData.job_type)
+            setDepsChecked(departments.map(v => userData.categories.includes(v._id)))
+            setDepPref(userData.categories)
+            setLocsChecked(locations.map(v => userData.location_prefs.includes(v._id)))
+            setLocPref(userData.location_prefs)
+            setLinkedIn(userData.linkedin)
+        }
+        if (userID) {
+            fetchData()
+        }
+    }, [userID])
+
+    useEffect(() => {
+        if (userData.job_type === 'Internship') {
+            internshipRef.current.click()
+        } else if (userData.job_type === "Full-Time") {
+            fullTimeRef.current.click()
+        }
+    }, [userData])
 
     const navigate = useNavigate()
 
@@ -83,10 +124,11 @@ function StudentApp () {
         }
         if (linkedIn) params.linkedin = linkedIn
         console.log(params)
-        axios.post(`http://localhost:8080/api/students`, params);
-
-        // navigate to student home
-        navigate('/student/home')
+        axios.post(`http://localhost:8080/api/students`, params).then(r => {
+            // navigate to student home
+            console.log(r)
+            navigate('/student/home?id=' + r.data._id)
+        });
     }
 
     // for resume upload: https://www.filestack.com/fileschool/react/react-file-upload/
@@ -128,7 +170,7 @@ function StudentApp () {
                     <input type="email" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}/>
                 </p>
             </div>
-            <div className="form-row">
+            {!hidePW && <div className="form-row">
                 <p className="form-group">
                     <label htmlFor="pw">Password</label>
                     <br/>
@@ -173,9 +215,9 @@ function StudentApp () {
                         setCPW(e.target.value)
                         setPWMatch(pw === e.target.value ? 'Passwords match!' : 'Error: passwords do not match.')
                     }}/>
-                    <text>{pwMatch}</text>
+                    <ul>{pwMatch && <li>{pwMatch}</li>}</ul>
                 </p>
-            </div>
+            </div>}
             <p>
                 <label htmlFor="phone">Phone Number</label>
                 <br/>
@@ -211,11 +253,11 @@ function StudentApp () {
             <p>
                 <label htmlFor="workpref">Job Preference</label>
                 <br/>
-                <input type="radio" id="intern" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
-                <label htmlFor="intern">Internship</label>
+                <input ref={internshipRef} type="radio" id="Internship" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
+                <label htmlFor="Internship">Internship</label>
                 <br/>
-                <input type="radio" id="fulltime" name="workpref" value="Full-Time" onChange={e => setWorkPref(e.target.value)}/>
-                <label htmlFor="fulltime">Full-Time</label>
+                <input ref={fullTimeRef} type="radio" id="Full-Time" name="workpref" value="Full-Time" onChange={e => setWorkPref(e.target.value)}/>
+                <label htmlFor="Full-Time">Full-Time</label>
             </p>
             <p>
                 <label htmlFor="deppref">Department Preference</label>

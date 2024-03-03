@@ -1,4 +1,4 @@
-import "./FilterCategory.css"
+import "../styles/FilterCategory.css"
 
 function FilterCategory({name, data}) {
     var showCategory = false;
