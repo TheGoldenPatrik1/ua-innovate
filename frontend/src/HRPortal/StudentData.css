@@ -1,16 +1,19 @@
 .student-row {
-    display: flex;
-    flex-direction: row;
-    column-gap: 10px;
+    border-bottom: 1px solid black;
+}
+
+.student-row:nth-child(even) {
+    background-color: #cacccb;
+}
+
+.student-row:hover {
+    background-color: #919191;
+    cursor: pointer;
 }
 
 .student-field {
-    flex: 1 1 300px;
-}
-
-
-.student-field {
-    flex-basis: 300px;
+    text-align: center;
+    padding: 10px 5px 5px 5px;
 }
 
 .student-modal {
