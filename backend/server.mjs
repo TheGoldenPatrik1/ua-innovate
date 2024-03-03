@@ -1,21 +1,23 @@
 import express from "express";
 import './db.mjs'
+import cors from 'cors'
+import expressSession from "express-session"
 import studentController from './controllers/studentController.mjs'
 import majorController from './controllers/majorController.mjs'
 import categoryController from './controllers/categoryController.mjs'
 import locationController from './controllers/locationController.mjs'
-import cors from 'cors'
+import schoolController from './controllers/schoolController.mjs'
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 app.use(cors());
-
 app.use(express.json())
 app.use('/api', studentController)
 app.use('/api', majorController)
 app.use('/api', categoryController)
 app.use('/api', locationController)
+app.use('/api', schoolController)
 
 app.get('/', (req, res) => {
   res.send('Welcome to my server!');
