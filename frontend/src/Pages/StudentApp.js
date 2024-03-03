@@ -91,7 +91,7 @@ function StudentApp () {
     useEffect(() => {
         if (userData.job_type === 'Internship') {
             internshipRef.current.click()
-        } else {
+        } else if (userData.job_type === "Full-Time") {
             fullTimeRef.current.click()
         }
     }, [userData])

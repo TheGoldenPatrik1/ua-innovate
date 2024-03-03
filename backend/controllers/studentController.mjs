@@ -38,14 +38,14 @@ router.get('/students/:id', async (req, res) => {
 });
 
 // Get student ID from username
-router.get('/users', async (req, res) => {
+router.get('/users/:username', async (req, res) => {
   try {
     const users = await User.find();
-    const user = users.filter((u) => u.username == req.body.username)[0]
+    const user = users.filter((u) => u.username == req.params.username)[0]
     if (user.admin) {res.send("admin")}
     else {
       const students = await Student.find();
-      const student = students.filter((s) => s.email == req.body.username)[0]
+      const student = students.filter((s) => s.email == req.params.username)[0]
       res.send(student._id)
     }
   } catch (error) {
