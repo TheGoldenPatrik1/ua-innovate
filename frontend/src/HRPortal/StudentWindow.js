@@ -70,9 +70,9 @@ class StudentWindow extends React.Component{
                     </div>
                     <div id="student-window" class="modal-body">
                         <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 1: " value={this.state.student.rating1} edit={this.state.edit} inputType="number" key="rating1" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 2: " value={this.state.student.rating2} edit={this.state.edit} inputType="number" key="rating2" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 3: " value={this.state.student.rating3} edit={this.state.edit} inputType="number" key="rating3" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Rating 1: " value={this.state.rating1} edit={this.state.edit} inputType="number" stateKey="rating1" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Rating 2: " value={this.state.rating2} edit={this.state.edit} inputType="number" stateKey="rating2" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Rating 3: " value={this.state.rating3} edit={this.state.edit} inputType="number" stateKey="rating3" parentCallback={this.onChangeCallback}/>
                     </div>
                 </div>
             </div>

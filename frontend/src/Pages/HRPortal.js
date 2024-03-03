@@ -30,19 +30,19 @@ class HRPortal extends React.Component {
               <div id="main">
                 <h1>HR Portal</h1>
                 <input type="text" placeholder="search"/>
-                <div id="student-table">
+                <table id="student-table">
                     {/*TODO: figure out how to include table headers later */}
-                    {/* <div>
-                        <span>Name</span>
-                        <span>Email</span>
-                        <span>Rating 1</span>
-                        <span>Rating 2</span>
-                        <span>Rating 3</span>
-                    </div> */}
+                    <tr className="heading-row">
+                        <th><span>Name</span></th>
+                        <th style={{width: "50%"}}><span>Email</span></th>
+                        <th><span>Rating 1</span></th>
+                        <th><span>Rating 2</span></th>
+                        <th><span>Rating 3</span></th>
+                    </tr>
                     
             
                     {studentElements}
-                </div>
+                </table>
                 {this.state.window}
                 
               </div>

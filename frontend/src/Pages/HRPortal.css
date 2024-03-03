@@ -4,8 +4,14 @@
 }
 
 #student-table {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
+    width:100%;
+    border-collapse: collapse;
+}
+
+.heading-row {
+    border-bottom: 2px solid black;
 }
 
 #main {
