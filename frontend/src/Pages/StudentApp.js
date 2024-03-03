@@ -84,7 +84,7 @@ function StudentApp () {
             setLinkedIn(response.data.linkedin)
             setResume(response.data.resume)
         }
-        if (userID) {
+        if (userID && userID.length > 5) {
             fetchData()
         }
     }, [departments, locations])
@@ -105,7 +105,7 @@ function StudentApp () {
             return alert('Required field missing!')
         }
 
-        if (linkedIn && !linkedIn.match(/^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/)) {
+        if (linkedIn && !linkedIn.match(/^https?:\/\/([a-z]{2,3})?\.linkedin\.com\/.*$/)) {
             return alert('LinkedIn URL is invalid!')
         }
 
@@ -196,7 +196,6 @@ function StudentApp () {
                 <input type="file" id="resume" name="resume" value="" style={{color: 'transparent'}} accept=".pdf" onChange={e => {
                     const [file] = e.target.files
                     setResume(file)
-                    //document.getElementById("resume").style.color = 'transparent'
                 }}/>
                 {resume && typeof(resume) !== 'string' && <section>
                     Successfully uploaded: {resume.name} ({Math.round(resume.size / 1024)} KB)
@@ -315,7 +314,7 @@ function StudentApp () {
 
             <div className="form-row">
                 <p>
-                    <label htmlFor="workpref">Job Preference</label>
+                    <label htmlFor="workpref">Job Type Preference</label>
                     <br/>
                     <input ref={internshipRef} type="radio" id="Internship" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
                     <label htmlFor="Internship">Internship</label>
@@ -332,7 +331,7 @@ function StudentApp () {
 
             <div className="checkbox">
                 <p className="checkbox-margin">
-                    <label htmlFor="deppref">Department Preference</label>
+                    <label htmlFor="deppref">Department Preferences</label>
                     <br/>
                         {departments.map((v, i) => {
                             return (
@@ -357,7 +356,7 @@ function StudentApp () {
                     <br/>
                 </p>
                 <p className="checkbox-margin">
-                    <label htmlFor="locpref">Top 3 Location Preference</label>
+                    <label htmlFor="locpref">Top 3 Location Preferences</label>
                     <br/>
                         {locations.map((v, i) => {
                             return (
