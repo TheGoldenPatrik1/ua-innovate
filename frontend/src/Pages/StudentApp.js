@@ -4,16 +4,35 @@ import axios from 'axios'
 import '../styles/StudentApp.css'
 
 function StudentApp () {
+    const [schools, setSchools] = useState([]);
     const [majors, setMajors] = useState([]);
+    const [departments, setDepartments] = useState([]);
+    const [locations, setLocations] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchSchools = async () => {
+            const response = await axios.get(`http://localhost:8080/api/schools`);
+            response.data.unshift({_id: "", school: ""})
+            setSchools(response.data);
+        }
+        const fetchMajors = async () => {
             const response = await axios.get(`http://localhost:8080/api/majors`);
-            response.data.unshift({major: ""})
+            response.data.unshift({_id: "", major: ""})
             setMajors(response.data);
         }
+        const fetchDepartments = async () => {
+            const response = await axios.get(`http://localhost:8080/api/categories`);
+            setDepartments(response.data);
+        }
+        const fetchLocations = async () => {
+            const response = await axios.get(`http://localhost:8080/api/locations`);
+            setLocations(response.data);
+        }
 
-        fetchData();
+        fetchSchools();
+        fetchMajors();
+        fetchDepartments();
+        fetchLocations();
     }, []);
 
 
@@ -26,28 +45,49 @@ function StudentApp () {
     const [cpw, setCPW] = useState('')
     const [pwMatch, setPWMatch] = useState('')
     const [phone, setPhone] = useState('')
+    const [school, setSchool] = useState('')
     const [major, setMajor] = useState('')
-    const [majorDisable, setMajorDisable] = useState('')
-    const [omajor, setOmajor] = useState('')
-    const [omajorDisable, setOmajorDisable] = useState('')
     const [graduation, setGraduation] = useState()
-    const [workpref, setWorkpref] = useState('')
-    const [linkedin, setLinkedin] = useState('')
+    const [workPref, setWorkPref] = useState('')
+    const [depsChecked, setDepsChecked] = useState(new Array(100).fill(false))
+    const [depPref, setDepPref] = useState([])
+    const [locsChecked, setLocsChecked] = useState(new Array(100).fill(false))
+    const [locPref, setLocPref] = useState([])
+    const [linkedIn, setLinkedIn] = useState('')
 
     const navigate = useNavigate()
 
     const submitHandler = () => {
         // verify input - this probably needs to be expanded
-        if (!resume || !fname || !lname || !email || !phone || !major || !graduation || !workpref) {
+        if (!fname || !lname || !email || !pw || !cpw || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
             return alert('Required field missing!')
         }
 
+        if (linkedIn && !linkedIn.match(/^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/)) {
+            return alert('LinkedIn URL is invalid!')
+        }
+
         // input is verified; now write to database
+        const params = {
+            email: email,
+            fname: fname,
+            lname: lname,
+            school: school,
+            major: major,
+            job_type: workPref,
+            categories: depPref,
+            location_prefs: locPref,
+            grad_date: graduation,
+            phone: phone,
+            interview_status: 'Pending Review'
+        }
+        if (linkedIn) params.linkedin = linkedIn
+        console.log(params)
+        axios.post(`http://localhost:8080/api/students`, params);
 
         // navigate to student home
         navigate('/student/home')
     }
-    // office interest
 
     // for resume upload: https://www.filestack.com/fileschool/react/react-file-upload/
     
@@ -128,25 +168,26 @@ function StudentApp () {
                 <input type="text" id="phone" name="phone" value={phone} onChange={e => setPhone(e.target.value)}/>
             </p>
             <p>
-                <label htmlFor="major">Select Major</label>
+                <label htmlFor="school">Select School</label>
                 <br/>
-                <select name="major" id="major" value={major} disabled={majorDisable} onChange={e => {
-                    setOmajorDisable(e.target.value ? true : false)
-                    setMajor(e.target.value)
-
+                <select name="school" id="school" value={school} onChange={e => {
+                    setSchool(e.target.value)
                 }}>
-                    {majors.map(v => {
-                        return (<option value={v.major}>{v.major}</option>)
+                    {schools.map(v => {
+                        return (<option value={v._id}>{v.school}</option>)
                     })}
                 </select>
             </p>
             <p>
-                <label htmlFor="omajor">Other Major</label>
+                <label htmlFor="major">Select Major</label>
                 <br/>
-                <input type="url" id="omajor" name="omajor" disabled={omajorDisable} value={omajor} onChange={e => {
-                    setMajorDisable(e.target.value ? true : false)
-                    setOmajor(e.target.value)
-                }}/>
+                <select name="major" id="major" value={major} onChange={e => {
+                    setMajor(e.target.value)
+                }}>
+                    {majors.map(v => {
+                        return (<option value={v._id}>{v.major}</option>)
+                    })}
+                </select>
             </p>
             <p>
                 <label htmlFor="graduation">Graduation Date</label>
@@ -156,16 +197,69 @@ function StudentApp () {
             <p>
                 <label htmlFor="workpref">Job Preference</label>
                 <br/>
-                <input type="radio" id="intern" name="workpref" value="intern" onChange={e => setWorkpref(e.target.value)}/>
-                <label htmlFor="intern">Intern</label>
+                <input type="radio" id="intern" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
+                <label htmlFor="intern">Internship</label>
                 <br/>
-                <input type="radio" id="fulltime" name="workpref" value="fulltime" onChange={e => setWorkpref(e.target.value)}/>
-                <label htmlFor="fulltime">Full Time</label>
+                <input type="radio" id="fulltime" name="workpref" value="Full-Time" onChange={e => setWorkPref(e.target.value)}/>
+                <label htmlFor="fulltime">Full-Time</label>
+            </p>
+            <p>
+                <label htmlFor="deppref">Department Preference</label>
+                <br/>
+                {departments.map((v, i) => {
+                    return (
+                        <span>
+                            <input type="checkbox" id={v._id} name="deppref" checked={depsChecked[i]} value={v._id} onChange={e => {
+                                const newArr = depPref;
+                                const newChecked = [...depsChecked]
+                                newChecked[i] = !newChecked[i]
+                                if (newArr.includes(v._id)) {
+                                    newArr.splice(newArr.indexOf(v._id), 1);
+                                } else {
+                                    newArr.push(v._id)
+                                }
+                                setDepsChecked(newChecked)
+                                setDepPref(newArr)
+                            }}/>
+                            <label htmlFor={v._id}>{v.category}</label>
+                            <br/>
+                        </span>
+                    )
+                })}
+                <br/>
+            </p>
+            <p>
+                <label htmlFor="locpref">Top 3 Location Preference</label>
+                <br/>
+                {locations.map((v, i) => {
+                    return (
+                        <span>
+                            <input type="checkbox" id={v._id} name="locpref" checked={locsChecked[i]} value={v._id} onChange={e => {
+                                const newArr = locPref;
+                                const newChecked = [...locsChecked]
+                                if (newArr.includes(v._id)) {
+                                    newChecked[i] = !newChecked[i]
+                                    newArr.splice(newArr.indexOf(v._id), 1);
+                                } else if (newArr.length !== 3) {
+                                    newChecked[i] = !newChecked[i]
+                                    newArr.push(v._id)
+                                } else {
+                                    alert('Error: you have already selected 3 locations; please unselect one before selecting another.')
+                                }
+                                setLocsChecked(newChecked)
+                                setLocPref(newArr)
+                            }}/>
+                            <label htmlFor={v._id}>{`${v.city}, ${v.state}`}</label>
+                            <br/>
+                        </span>
+                    )
+                })}
+                <br/>
             </p>
             <p>
                 <label htmlFor="linkedin">LinkedIn (optional)</label>
                 <br/>
-                <input type="url" id="linkedin" name="linkedin" value={linkedin} onChange={e => setLinkedin(e.target.value)}/>
+                <input type="url" id="linkedin" name="linkedin" value={linkedIn} onChange={e => setLinkedIn(e.target.value)}/>
             </p>
             <p>
                 <button onClick={submitHandler}>Submit</button>
