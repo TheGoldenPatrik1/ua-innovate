@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function FormValue({label, value, edit, inputType, stateKey, parentCallback, mappedValue}) {
+function FormValue({label, value, edit, inputType, stateKey, parentCallback, editable, options, max, min}) {
 
     function changeValue(e) {
         value = e.target.value;
@@ -9,7 +9,7 @@ function FormValue({label, value, edit, inputType, stateKey, parentCallback, map
 
     return (
         <div>
-            <label>{label}</label> {edit ? <input type={inputType} onChange={changeValue} value={value}/> : <span>{mappedValue || value}</span>}
+            <label>{label}</label> {(editable ? edit : false) ? (inputType === 'select' ? <select value={value} onChange={changeValue}>{options.map(v => <option value={v}>{v}</option>)}</select> : <input type={inputType} onChange={changeValue} value={value} max={max} min={min}/>) : <span>{value}</span>}
             <div style={{display:"none"}}><span>{stateKey}</span></div>
         </div>
     );
