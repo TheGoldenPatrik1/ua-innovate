@@ -99,7 +99,25 @@
     height: 2px; /* Set the height of the divider */
     background-color: #ccc; /* Set the color of the divider */
 }
-
+.button_test {  
+	position: absolute;
+    border-color: #5236ab;
+    margin-top: -35px; /* Add margin-bottom for spacing between buttons */
+    width: 30%;
+	left: 35%;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 5px 1px; /* Adjust padding as needed */
+    cursor: pointer;
+    font-size: 20px; /* Increase font size for better visibility */
+	transition: background-color 0.3s, color 0.3s;
+  }
+.button_test:hover {
+	background-color: #0056b3; /* Change the background color on hover */
+    color: rgb(255, 255, 255);
+}
 @media (max-width: 900px) {
 	.form-group {
 		flex: 0 0 100%; /* Set width of each form group to 100% for smaller screens */

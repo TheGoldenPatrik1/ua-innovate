@@ -59,8 +59,12 @@
     padding: 5px 1px; /* Adjust padding as needed */
     cursor: pointer;
     font-size: 20px; /* Increase font size for better visibility */
+    transition: background-color 0.3s, color 0.3s;
   }
-
+  .button:hover {
+    background-color: #0056b3; /* Change the background color on hover */
+      color: rgb(255, 255, 255);
+  }
   .button-margin{
     margin-bottom: 15px;
   }
