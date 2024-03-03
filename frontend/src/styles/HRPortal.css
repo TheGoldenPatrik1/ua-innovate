@@ -1,7 +1,24 @@
+.hr-portal {
+    height: 100vh;
+}
+
 .portal-main {
     display: flex;
     column-gap: 10px;
     flex-direction: row;
+    height: calc(100% - 50px);
+}
+
+.banner {
+    width: 100%;
+    background-image: linear-gradient(to right, #5236ab, #e31937);
+    height: 25px;
+}
+
+.portal-title {
+    display: flex;
+    flex-direction: row;
+    
 }
 
 #student-table {
@@ -19,8 +36,54 @@
     width: 100%;
 }
 
+#title-text {
+    flex: 1 1 auto;
+}
+
 #create-new-button, #logout-button {
-    float: right;
+    flex: 0 0 auto;
+}
+.button-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.blue {
+	background-color: #5236ab;
+    border:2px solid #5236ab;
+}
+.red {
+	background-color: #e31937;
+    border:2px solid #e31937;
+}
+.white {
+	background-color: #8b8b8b;
+}
+
+.blue:hover {
+    background-color: #ffffff;
+    color:#5236ab;
+    
+    border:2px solid #5236ab;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+}
+
+.red:hover {
+    background-color: #ffffff;
+    color:#e31937;
+    border:2px solid #e31937;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+}
+.styled-button {
+	margin: 0 15px;
+	padding: 10px 40px;
+	border-radius: 5px;
+	font-size: 20px;
+	color: #ffffff;
+	cursor: pointer;
 }
 
 #toggle-side-panel-button {
@@ -30,6 +93,25 @@
     top: 0;
 }
 
+.divider {
+	background-image: linear-gradient(to right, #e31937, #5236ab);
+	margin-left: 10%;
+    justify-content: center;
+    width: 80%; /* Set the width to fill the container */
+    height: 2px; /* Set the height of the divider */
+    background-color: #ccc; /* Set the color of the divider */
+  }
 
+  #portal-search-container {
+    flex: 1 1 500px;
+    display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+
+  #portal-search {
+    flex-basis:100%;
+    padding: 10px 20px;
+  }
 
   

@@ -3,11 +3,11 @@
 }
 
 .student-row:nth-child(even) {
-    background-color: #cacccb;
+    background-color: #dedede;
 }
 
 .student-row:hover {
-    background-color: #919191;
+    background-color: #b9b9b9;
     cursor: pointer;
 }
 
