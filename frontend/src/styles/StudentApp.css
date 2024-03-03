@@ -64,11 +64,20 @@
     font-size: 16px;
 	margin-top: 10px;
 }
+.form-group jobpref{
+    width: 99%; /* Adjust width as needed */
+    padding: 10px; /* Adjust padding as needed */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+	margin-top: 10px;
+}
 
 .checkbox {
-	margin: 0px 10%;
+	margin: 0px 5%;
 	justify-content: space-between;
 	display: flex;
+	flex-wrap: wrap; /* Allow flex items to wrap to the next line */
   }
 
 .checkbox-margin{
@@ -93,6 +102,9 @@
 
 @media (max-width: 900px) {
 	.form-group {
+		flex: 0 0 100%; /* Set width of each form group to 100% for smaller screens */
+	}
+	.checkbox {
 		flex: 0 0 100%; /* Set width of each form group to 100% for smaller screens */
 	}
 }

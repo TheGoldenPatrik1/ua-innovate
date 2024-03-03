@@ -282,20 +282,6 @@ function StudentApp () {
                     <input type="text" id="phone" name="phone" value={phone} onChange={e => setPhone(e.target.value)}/>
                 </p>
                 <p className="form-group">
-                    <label htmlFor="school">Select School</label>
-                    <br/>
-                    <select name="school" id="school" value={school} onChange={e => {
-                        setSchool(e.target.value)
-                    }}>
-                        {schools.map(v => {
-                            return (<option value={v._id}>{v.school}</option>)
-                        })}
-                    </select>
-                </p>
-            </div>
-            
-            <div className="form-row">
-                <p className="form-group">
                     <label htmlFor="major">Select Major</label>
                     <br/>
                     <select name="major" id="major" value={major} onChange={e => {
@@ -303,6 +289,20 @@ function StudentApp () {
                     }}>
                         {majors.map(v => {
                             return (<option value={v._id}>{v.major}</option>)
+                        })}
+                    </select>
+                </p>
+            </div>
+            
+            <div className="form-row">
+                <p className="form-group">
+                    <label htmlFor="school">Select School</label>
+                    <br/>
+                    <select name="school" id="school" value={school} onChange={e => {
+                        setSchool(e.target.value)
+                    }}>
+                        {schools.map(v => {
+                            return (<option value={v._id}>{v.school}</option>)
                         })}
                     </select>
                 </p>
@@ -314,7 +314,7 @@ function StudentApp () {
             </div>     
 
             <div className="form-row">
-                <p className="form-group">
+                <p>
                     <label htmlFor="workpref">Job Preference</label>
                     <br/>
                     <input ref={internshipRef} type="radio" id="Internship" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
