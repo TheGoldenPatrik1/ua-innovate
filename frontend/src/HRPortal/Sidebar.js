@@ -3,7 +3,7 @@ import FilterCategory from "./FilterCategory";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function Sidebar({visible}) {
+function Sidebar({visible, filterChangeCallback}) {
     const [filterCategories, setFilterCategories] = useState([]);
     useEffect(() => {
         const fetchMajors = async () => {
@@ -31,7 +31,7 @@ function Sidebar({visible}) {
     }, []);
     const filterDivs = [];
     for (const [key, value] of Object.entries(filterCategories)) {
-        filterDivs.push(<FilterCategory name={key} data={value}/>)
+        filterDivs.push(<FilterCategory name={key} data={value} onChange={filterChangeCallback}/>)
     }
     return(
         <div class="sidebar" style={visible ? {display:"block"} : {display: "none"}}>

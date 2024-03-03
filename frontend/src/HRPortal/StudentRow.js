@@ -26,7 +26,6 @@ class StudentRow extends React.Component{
                 <td><span class="student-field student-status">{this.state.student.interview_status}</span></td>
                 <td><span class="student-field student-tech-score">{this.state.student.technical_score || 'N/A'}</span></td>
                 <td><span class="student-field student-behavior-score">{this.state.student.behavioral_score || 'N/A'}</span></td>
-                {/* <StudentWindow student={this.state.student} visible={this.state.visible} parentCallback={this.handleCallback}/> */}
                 {this.state.visible ===true && (
                     <div class="student-modal">
                         <div class="student-modal-content">
