@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router();
 import Student from '../models/Student.mjs'
+import User from '../models/User.mjs'
 
 // Get all students
 router.get('/students', async (req, res) => {
@@ -35,6 +36,22 @@ router.get('/students/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// Get student ID from username
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    const user = users.filter((u) => u.username == req.body.username)[0]
+    if (user.admin) {res.send("admin")}
+    else {
+      const students = await Student.find();
+      const student = students.filter((s) => s.email == req.body.username)[0]
+      res.send(student._id)
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
 
 // Edit a student by ID
 router.put("/students/:id", async (req, res) => {
