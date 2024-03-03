@@ -19,7 +19,7 @@ function sortByName(a, b) {
 function HRPortal() {
     const [students, setStudents] = useState({});
     const [studentData, setStudentData] = useState({});
-    const [window, setWindow] = useState('');
+    const [windows, setWindows] = useState('');
     const [sideBarVisible, setSideBarVisible] = useState(true);
     const [filters, setFilters] = useState({});
     const [search, setSearch] = useState('');
@@ -90,16 +90,21 @@ function HRPortal() {
 
     const handleCallback = (childData) => {
         if(childData === -1) {
-            setWindow('') 
+            setWindows('') 
         } else {
             console.log(childData);
-            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={windowConstants} navigation={navigate}/>)
+            setWindows(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={windowConstants} navigation={navigate}/>)
         }
         
     }
 
     function exportData() {
-        alert('yo that data be bussin')
+        axios.post(`http://localhost:8080/api/reports/filtered`, students).then(r => {
+            console.log(r);
+            window.open(`http://localhost:8080/${r.data}`, "_blank");
+        }).catch(e => {
+            console.log(e);
+        })
     }
 
     function createApplication() {
@@ -201,7 +206,7 @@ function HRPortal() {
             <div class="portal-main">
                 <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated} constants={constants}/>
                 <div id="main">
-                    <button id="toggle-side-panel-button" onClick={toggleSideBarClick}><GiHamburgerMenu/></button>
+                    <button id="toggle-side-panel-button"   onClick={toggleSideBarClick}><GiHamburgerMenu/></button>
                 <div className='portal-title'>
                     <h1 id="title-text">HR Portal</h1>
                     <div id='portal-search-container'>
@@ -242,7 +247,7 @@ function HRPortal() {
             
                     {studentElements}
                 </table>
-                {window}
+                {windows}
                 
                 </div>
                 
