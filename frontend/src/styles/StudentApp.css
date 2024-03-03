@@ -9,6 +9,12 @@
     height: 100%;
   }
 
+.title{
+	font-size: 40px;
+	font-weight: 500;
+	display:flex;
+	justify-content: center;
+}
 .application-form {
 	width: 90%;
 	margin: 50px auto;
@@ -24,6 +30,7 @@
 }
 
 .form-row {
+	margin: 0px 5%;
 	justify-content: space-between;
 	display: flex;
 	flex-wrap: wrap; /* Allow flex items to wrap to the next line */
@@ -39,6 +46,7 @@
 .full-width {
 	flex: 0 0 103%; /* Set width of each form group to 50% minus margin */
 }
+
 .form-group input{
     width: 95%; /* Adjust width as needed */
     padding: 10px; /* Adjust padding as needed */
@@ -57,11 +65,31 @@
 	margin-top: 10px;
 }
 
+.checkbox {
+	margin: 0px 10%;
+	justify-content: space-between;
+	display: flex;
+  }
+
+.checkbox-margin{
+	margin-right: 100px;
+}
+
 .header-label {
 	margin-right: 100px;
 	margin-left: 100px;
 	font-size: 16px;
   }
+
+.divider {
+	background-image: linear-gradient(to right, #e31937, #5236ab);
+	margin-left: 25%;
+    justify-content: center;
+	margin-top: 20px;
+    width: 50%; /* Set the width to fill the container */
+    height: 2px; /* Set the height of the divider */
+    background-color: #ccc; /* Set the color of the divider */
+}
 
 @media (max-width: 900px) {
 	.form-group {

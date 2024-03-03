@@ -154,9 +154,11 @@ function StudentApp () {
     return (
         <div className="background">
             <div className="application-form">
-            <h1>Application</h1>
+            <div className="title">Application</div>
+            <div className="divider"></div>
             
-            <p>
+            <div className="form-row">
+                <p>
                 <label htmlFor="resume">Resume</label>
                 <br/>
                 <input type="file" id="resume" name="resume" value="" style={{color: 'transparent'}} accept=".pdf" onChange={e => {
@@ -173,6 +175,7 @@ function StudentApp () {
                 {!resume && <section>No file selected</section>}
             </p>
 
+            </div>
             <div className="form-row">
                 <p className="form-group">
                     <label htmlFor="fname">First Name</label>
@@ -295,58 +298,58 @@ function StudentApp () {
                 </p>
             </div>
 
-            <div className="form-row">
-                <p className="form-group">
+            <div className="checkbox">
+                <p className="checkbox-margin">
                     <label htmlFor="deppref">Department Preference</label>
                     <br/>
-                    {departments.map((v, i) => {
-                        return (
-                            <span>
-                                <input type="checkbox" id={v._id} name="deppref" checked={depsChecked[i]} value={v._id} onChange={e => {
-                                    const newArr = depPref;
-                                    const newChecked = [...depsChecked]
-                                    newChecked[i] = !newChecked[i]
-                                    if (newArr.includes(v._id)) {
-                                        newArr.splice(newArr.indexOf(v._id), 1);
-                                    } else {
-                                        newArr.push(v._id)
-                                    }
-                                    setDepsChecked(newChecked)
-                                    setDepPref(newArr)
-                                }}/>
-                                <label htmlFor={v._id}>{v.category}</label>
-                                <br/>
-                            </span>
-                        )
-                    })}   
+                        {departments.map((v, i) => {
+                            return (
+                                <span>
+                                    <input type="checkbox" id={v._id} name="deppref" checked={depsChecked[i]} value={v._id} onChange={e => {
+                                        const newArr = depPref;
+                                        const newChecked = [...depsChecked]
+                                        newChecked[i] = !newChecked[i]
+                                        if (newArr.includes(v._id)) {
+                                            newArr.splice(newArr.indexOf(v._id), 1);
+                                        } else {
+                                            newArr.push(v._id)
+                                        }
+                                        setDepsChecked(newChecked)
+                                        setDepPref(newArr)
+                                    }}/>
+                                    <label htmlFor={v._id}>{v.category}</label>
+                                    <br/>
+                                </span>
+                            )
+                        })}   
                     <br/>
                 </p>
-                <p className="form-group">
+                <p className="checkbox-margin">
                     <label htmlFor="locpref">Top 3 Location Preference</label>
                     <br/>
-                    {locations.map((v, i) => {
-                        return (
-                            <span>
-                                <input type="checkbox" id={v._id} name="locpref" checked={locsChecked[i]} value={v._id} onChange={e => {
-                                    const newArr = locPref;
-                                    const newChecked = [...locsChecked]
-                                    if (newArr.includes(v._id)) {
-                                        newChecked[i] = !newChecked[i]
-                                        newArr.splice(newArr.indexOf(v._id), 1);
-                                    } else if (newArr.length !== 3) {
-                                        newChecked[i] = !newChecked[i]
-                                        newArr.push(v._id)
-                                    } else {
-                                        alert('Error: you have already selected 3 locations; please unselect one before selecting another.')
-                                    }
-                                    setLocsChecked(newChecked)
-                                    setLocPref(newArr)
-                                }}/>
-                                <label htmlFor={v._id}>{`${v.city}, ${v.state}`}</label>
-                                <br/>
-                            </span>
-                        )
-                    })}
+                        {locations.map((v, i) => {
+                            return (
+                                <span>
+                                    <input type="checkbox" id={v._id} name="locpref" checked={locsChecked[i]} value={v._id} onChange={e => {
+                                        const newArr = locPref;
+                                        const newChecked = [...locsChecked]
+                                        if (newArr.includes(v._id)) {
+                                            newChecked[i] = !newChecked[i]
+                                            newArr.splice(newArr.indexOf(v._id), 1);
+                                        } else if (newArr.length !== 3) {
+                                            newChecked[i] = !newChecked[i]
+                                            newArr.push(v._id)
+                                        } else {
+                                            alert('Error: you have already selected 3 locations; please unselect one before selecting another.')
+                                        }
+                                        setLocsChecked(newChecked)
+                                        setLocPref(newArr)
+                                    }}/>
+                                    <label htmlFor={v._id}>{`${v.city}, ${v.state}`}</label>
+                                    <br/>
+                                </span>
+                            )
+                        })}
                     <br/>
                 </p>
             </div>
