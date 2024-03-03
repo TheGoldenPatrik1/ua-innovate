@@ -4,6 +4,7 @@ import studentController from './controllers/studentController.mjs'
 import majorController from './controllers/majorController.mjs'
 import categoryController from './controllers/categoryController.mjs'
 import locationController from './controllers/locationController.mjs'
+import schoolController from './controllers/schoolController.mjs'
 import cors from 'cors'
 
 const app = express();
@@ -15,6 +16,7 @@ app.use('/api', studentController)
 app.use('/api', majorController)
 app.use('/api', categoryController)
 app.use('/api', locationController)
+app.use('/api', schoolController)
 
 app.get('/', (req, res) => {
   res.send('Welcome to my server!');
