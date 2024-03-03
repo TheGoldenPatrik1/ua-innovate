@@ -7,12 +7,11 @@ import "../styles/HRPortal.css";
 import axios from "axios";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-function sortByName(a, b) {
-    if (a.lname < b.lname) return -1;
-    if (a.lname > b.lname) return 1;
-    // If the first keys are equal, sort based on the second key
-    if (a.fname < b.fname) return -1;
-    if (a.fname > b.fname) return 1;
+function sortByScores(a, b) {
+    a = (a.technical_score || 0) + (a.behavioral_score || 0)
+    b = (b.technical_score || 0) + (b.behavioral_score || 0)
+    if (a > b) return -1;
+    if (a < b) return 1;
     return 0;
 }
 
@@ -29,7 +28,7 @@ function HRPortal() {
     useEffect(() => {
         const fetchStudents = async () => {
             const response = await axios.get(`http://localhost:8080/api/students`);
-            const data = response.data.sort(sortByName);
+            const data = response.data.sort(sortByScores);
             setStudentData(data);
             setStudents(data);
         }
@@ -154,7 +153,7 @@ function HRPortal() {
             
             
         }
-        return newStudents
+        return newStudents.sort(sortByScores)
     }
 
     function filterUpdated(id, key, value) {
