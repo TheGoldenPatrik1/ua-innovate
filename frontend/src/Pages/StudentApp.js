@@ -100,7 +100,7 @@ function StudentApp () {
 
     const submitHandler = () => {
         // verify input - this probably needs to be expanded
-        if (!fname || !lname || !email || !pw || !cpw || !pwMatch || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
+        if (!fname || !lname || !email || !pw || !cpw || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
             return alert('Required field missing!')
         }
 
@@ -108,38 +108,27 @@ function StudentApp () {
             return alert('LinkedIn URL is invalid!')
         }
 
-        axios.post('http://localhost:8080/signup', {
-            username: email,
-            password: pw
-        }).then(r => {
+        // input is verified; now write to database
+        const params = {
+            email: email,
+            fname: fname,
+            lname: lname,
+            school: school,
+            major: major,
+            job_type: workPref,
+            categories: depPref,
+            location_prefs: locPref,
+            grad_date: graduation,
+            phone: phone,
+            interview_status: 'Pending Review'
+        }
+        if (linkedIn) params.linkedin = linkedIn
+        console.log(params)
+        axios.post(`http://localhost:8080/api/students`, params).then(r => {
+            // navigate to student home
             console.log(r)
-            // input is verified; now write to database
-            const params = {
-                email: email,
-                fname: fname,
-                lname: lname,
-                school: school,
-                major: major,
-                job_type: workPref,
-                categories: depPref,
-                location_prefs: locPref,
-                grad_date: graduation,
-                phone: phone,
-                interview_status: 'Pending Review'
-            }
-            if (linkedIn) params.linkedin = linkedIn
-            console.log(params)
-            axios.post(`http://localhost:8080/api/students`, params).then(r => {
-                // navigate to student home
-                console.log(r)
-                navigate('/student/home?id=' + r.data._id)
-            });
-        }).catch(e => {
-            console.log(e)
-            alert('Email is already tied to an account - please sign in or use a different email.')
-        })
-
-        
+            navigate('/student/home?id=' + r.data._id)
+        });
     }
 
     // for resume upload: https://www.filestack.com/fileschool/react/react-file-upload/
@@ -229,105 +218,116 @@ function StudentApp () {
                     <ul>{pwMatch && <li>{pwMatch}</li>}</ul>
                 </p>
             </div>}
-            <p>
-                <label htmlFor="phone">Phone Number</label>
-                <br/>
-                <input type="text" id="phone" name="phone" value={phone} onChange={e => setPhone(e.target.value)}/>
-            </p>
-            <p>
-                <label htmlFor="school">Select School</label>
-                <br/>
-                <select name="school" id="school" value={school} onChange={e => {
-                    setSchool(e.target.value)
-                }}>
-                    {schools.map(v => {
-                        return (<option value={v._id}>{v.school}</option>)
-                    })}
-                </select>
-            </p>
-            <p>
-                <label htmlFor="major">Select Major</label>
-                <br/>
-                <select name="major" id="major" value={major} onChange={e => {
-                    setMajor(e.target.value)
-                }}>
-                    {majors.map(v => {
-                        return (<option value={v._id}>{v.major}</option>)
-                    })}
-                </select>
-            </p>
-            <p>
-                <label htmlFor="graduation">Graduation Date</label>
-                <br/>
-                <input type="month" id="graduation" name="graduation" value={graduation} onChange={e => setGraduation(e.target.value)}/>
-            </p>
-            <p>
-                <label htmlFor="workpref">Job Preference</label>
-                <br/>
-                <input ref={internshipRef} type="radio" id="Internship" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
-                <label htmlFor="Internship">Internship</label>
-                <br/>
-                <input ref={fullTimeRef} type="radio" id="Full-Time" name="workpref" value="Full-Time" onChange={e => setWorkPref(e.target.value)}/>
-                <label htmlFor="Full-Time">Full-Time</label>
-            </p>
-            <p>
-                <label htmlFor="deppref">Department Preference</label>
-                <br/>
-                {departments.map((v, i) => {
-                    return (
-                        <span>
-                            <input type="checkbox" id={v._id} name="deppref" checked={depsChecked[i]} value={v._id} onChange={e => {
-                                const newArr = depPref;
-                                const newChecked = [...depsChecked]
-                                newChecked[i] = !newChecked[i]
-                                if (newArr.includes(v._id)) {
-                                    newArr.splice(newArr.indexOf(v._id), 1);
-                                } else {
-                                    newArr.push(v._id)
-                                }
-                                setDepsChecked(newChecked)
-                                setDepPref(newArr)
-                            }}/>
-                            <label htmlFor={v._id}>{v.category}</label>
-                            <br/>
-                        </span>
-                    )
-                })}
-                <br/>
-            </p>
-            <p>
-                <label htmlFor="locpref">Top 3 Location Preference</label>
-                <br/>
-                {locations.map((v, i) => {
-                    return (
-                        <span>
-                            <input type="checkbox" id={v._id} name="locpref" checked={locsChecked[i]} value={v._id} onChange={e => {
-                                const newArr = locPref;
-                                const newChecked = [...locsChecked]
-                                if (newArr.includes(v._id)) {
+            <div className="form-row">
+                <p className="form-group">
+                    <label htmlFor="phone">Phone Number</label>
+                    <br/>
+                    <input type="text" id="phone" name="phone" value={phone} onChange={e => setPhone(e.target.value)}/>
+                </p>
+                <p className="form-group">
+                    <label htmlFor="school">Select School</label>
+                    <br/>
+                    <select name="school" id="school" value={school} onChange={e => {
+                        setSchool(e.target.value)
+                    }}>
+                        {schools.map(v => {
+                            return (<option value={v._id}>{v.school}</option>)
+                        })}
+                    </select>
+                </p>
+            </div>
+            
+            <div className="form-row">
+                <p className="form-group">
+                    <label htmlFor="major">Select Major</label>
+                    <br/>
+                    <select name="major" id="major" value={major} onChange={e => {
+                        setMajor(e.target.value)
+                    }}>
+                        {majors.map(v => {
+                            return (<option value={v._id}>{v.major}</option>)
+                        })}
+                    </select>
+                </p>
+                <p className="form-group">
+                    <label htmlFor="graduation">Graduation Date</label>
+                    <br/>
+                    <input type="month" id="graduation" name="graduation" value={graduation} onChange={e => setGraduation(e.target.value)}/>
+                </p>
+            </div>     
+
+            <div className="form-row">
+                <p className="form-group">
+                    <label htmlFor="workpref">Job Preference</label>
+                    <br/>
+                    <input ref={internshipRef} type="radio" id="Internship" name="workpref" value="Internship" onChange={e => setWorkPref(e.target.value)}/>
+                    <label htmlFor="Internship">Internship</label>
+                    <br/>
+                    <input ref={fullTimeRef} type="radio" id="Full-Time" name="workpref" value="Full-Time" onChange={e => setWorkPref(e.target.value)}/>
+                    <label htmlFor="Full-Time">Full-Time</label>
+                </p>
+                <p className="form-group">
+                    <label htmlFor="linkedin">LinkedIn (optional)</label>
+                    <br/>
+                    <input type="url" id="linkedin" name="linkedin" value={linkedIn} onChange={e => setLinkedIn(e.target.value)}/>
+                </p>
+            </div>
+
+            <div className="form-row">
+                <p className="form-group">
+                    <label htmlFor="deppref">Department Preference</label>
+                    <br/>
+                    {departments.map((v, i) => {
+                        return (
+                            <span>
+                                <input type="checkbox" id={v._id} name="deppref" checked={depsChecked[i]} value={v._id} onChange={e => {
+                                    const newArr = depPref;
+                                    const newChecked = [...depsChecked]
                                     newChecked[i] = !newChecked[i]
-                                    newArr.splice(newArr.indexOf(v._id), 1);
-                                } else if (newArr.length !== 3) {
-                                    newChecked[i] = !newChecked[i]
-                                    newArr.push(v._id)
-                                } else {
-                                    alert('Error: you have already selected 3 locations; please unselect one before selecting another.')
-                                }
-                                setLocsChecked(newChecked)
-                                setLocPref(newArr)
-                            }}/>
-                            <label htmlFor={v._id}>{`${v.city}, ${v.state}`}</label>
-                            <br/>
-                        </span>
-                    )
-                })}
-                <br/>
-            </p>
-            <p>
-                <label htmlFor="linkedin">LinkedIn (optional)</label>
-                <br/>
-                <input type="url" id="linkedin" name="linkedin" value={linkedIn} onChange={e => setLinkedIn(e.target.value)}/>
-            </p>
+                                    if (newArr.includes(v._id)) {
+                                        newArr.splice(newArr.indexOf(v._id), 1);
+                                    } else {
+                                        newArr.push(v._id)
+                                    }
+                                    setDepsChecked(newChecked)
+                                    setDepPref(newArr)
+                                }}/>
+                                <label htmlFor={v._id}>{v.category}</label>
+                                <br/>
+                            </span>
+                        )
+                    })}   
+                    <br/>
+                </p>
+                <p className="form-group">
+                    <label htmlFor="locpref">Top 3 Location Preference</label>
+                    <br/>
+                    {locations.map((v, i) => {
+                        return (
+                            <span>
+                                <input type="checkbox" id={v._id} name="locpref" checked={locsChecked[i]} value={v._id} onChange={e => {
+                                    const newArr = locPref;
+                                    const newChecked = [...locsChecked]
+                                    if (newArr.includes(v._id)) {
+                                        newChecked[i] = !newChecked[i]
+                                        newArr.splice(newArr.indexOf(v._id), 1);
+                                    } else if (newArr.length !== 3) {
+                                        newChecked[i] = !newChecked[i]
+                                        newArr.push(v._id)
+                                    } else {
+                                        alert('Error: you have already selected 3 locations; please unselect one before selecting another.')
+                                    }
+                                    setLocsChecked(newChecked)
+                                    setLocPref(newArr)
+                                }}/>
+                                <label htmlFor={v._id}>{`${v.city}, ${v.state}`}</label>
+                                <br/>
+                            </span>
+                        )
+                    })}
+                    <br/>
+                </p>
+            </div>
             <p>
                 <button onClick={submitHandler}>Submit</button>
             </p>
