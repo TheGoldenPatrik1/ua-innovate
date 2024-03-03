@@ -95,6 +95,7 @@ function StudentApp () {
         <div className="background">
             <div className="application-form">
             <h1>Application</h1>
+            
             <p>
                 <label htmlFor="resume">Resume</label>
                 <br/>
@@ -107,68 +108,74 @@ function StudentApp () {
                     Successfully uploaded: {resume.name} ({Math.round(resume.size / 1024)} KB)
                 </section>}
             </p>
+
             <div className="form-row">
-            <h1 class="header-label">Name:</h1>
-            <p className="form-group">
-                <input className="" type="text" id="fname" name="fname" value={fname} onChange={e => setFname(e.target.value)}/>
-                <br/>
-                <label htmlFor="fname">First Name</label></p>
-            <p className="form-group">
-                <input type="text" id="lname" name="lname" value={lname} onChange={e => setLname(e.target.value)}/>
-                <br/>
-                <label htmlFor="lname">Last Name</label>
-                </p></div>
-            <p>
-                <label htmlFor="email">Email Address</label>
-                <br/>
-                <input type="email" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}/>
-            </p>
-            <p>
-                <label htmlFor="pw">Password</label>
-                <br/>
-                <input type="pass" id="pw" name="pw" value={pw} onChange={e => {
-                    setPW(e.target.value)
-                    const req = []
-                    if (e.target.value.length < 8) req.push({
-                        key: 'length',
-                        value: 'Password must be at least eight characters'
-                    })
-                    if (!e.target.value.match(/[0-9]/)) req.push({
-                        key: 'length',
-                        value: 'Password must contain at least one number'
-                    })
-                    if (!e.target.value.match(/[A-Z]/)) req.push({
-                        key: 'length',
-                        value: 'Password must contain at least one uppercase letter'
-                    })
-                    if (!e.target.value.match(/[a-z]/)) req.push({
-                        key: 'length',
-                        value: 'Password must contain at least one lowercase letter'
-                    })
-                    if (!e.target.value.match(/[!@#$%^&*]/)) req.push({
-                        key: 'length',
-                        value: 'Password must contain at least one special character - !@#$%^&*'
-                    })
-                    setPWReq(req)
-                    if (pwMatch) {
-                        setPWMatch(e.target.value === cpw ? 'Passwords match!' : 'Error: passwords do not match.')
-                    }
-                }}/>
-                <ul>
-                    {pwReq.map((d) => {
-                        return (<li key={d.key}>{d.value}</li>)
-                    })}
-                </ul>
-            </p>
-            <p>
-                <label htmlFor="cpw">Confirm Password</label>
-                <br/>
-                <input type="pass" id="cpw" name="cpw" value={cpw} onChange={e => {
-                    setCPW(e.target.value)
-                    setPWMatch(pw === e.target.value ? 'Passwords match!' : 'Error: passwords do not match.')
-                }}/>
-                <text>{pwMatch}</text>
-            </p>
+                <p className="form-group">
+                    <label htmlFor="fname">First Name</label>
+                    <input type="text" id="fname" name="fname" value={fname} onChange={e => setFname(e.target.value)}/>
+                    </p>
+                <p className="form-group">
+                    <label htmlFor="lname">Last Name</label>
+                    <input type="text" id="lname" name="lname" value={lname} onChange={e => setLname(e.target.value)}/>
+                    <br/>
+                </p>
+            </div>
+
+            <div className="form-row">
+                <p className="form-group full-width">
+                    <label htmlFor="email">Email Address</label>
+                    <br/>
+                    <input type="email" id="email" name="email" value={email} onChange={e => setEmail(e.target.value)}/>
+                </p>
+            </div>
+            <div className="form-row">
+                <p className="form-group">
+                    <label htmlFor="pw">Password</label>
+                    <br/>
+                    <input type="pass" id="pw" name="pw" value={pw} onChange={e => {
+                        setPW(e.target.value)
+                        const req = []
+                        if (e.target.value.length < 8) req.push({
+                            key: 'length',
+                            value: 'Password must be at least eight characters'
+                        })
+                        if (!e.target.value.match(/[0-9]/)) req.push({
+                            key: 'length',
+                            value: 'Password must contain at least one number'
+                        })
+                        if (!e.target.value.match(/[A-Z]/)) req.push({
+                            key: 'length',
+                            value: 'Password must contain at least one uppercase letter'
+                        })
+                        if (!e.target.value.match(/[a-z]/)) req.push({
+                            key: 'length',
+                            value: 'Password must contain at least one lowercase letter'
+                        })
+                        if (!e.target.value.match(/[!@#$%^&*]/)) req.push({
+                            key: 'length',
+                            value: 'Password must contain at least one special character - !@#$%^&*'
+                        })
+                        setPWReq(req)
+                        if (pwMatch) {
+                            setPWMatch(e.target.value === cpw ? 'Passwords match!' : 'Error: passwords do not match.')
+                        }
+                    }}/>
+                    <ul>
+                        {pwReq.map((d) => {
+                            return (<li key={d.key}>{d.value}</li>)
+                        })}
+                    </ul>
+                </p>
+                <p className="form-group">
+                    <label htmlFor="cpw">Confirm Password</label>
+                    <br/>
+                    <input type="pass" id="cpw" name="cpw" value={cpw} onChange={e => {
+                        setCPW(e.target.value)
+                        setPWMatch(pw === e.target.value ? 'Passwords match!' : 'Error: passwords do not match.')
+                    }}/>
+                    <text>{pwMatch}</text>
+                </p>
+            </div>
             <p>
                 <label htmlFor="phone">Phone Number</label>
                 <br/>
