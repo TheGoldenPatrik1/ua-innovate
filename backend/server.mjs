@@ -1,11 +1,12 @@
 import express from "express";
 import './db.mjs'
+import cors from 'cors'
+import expressSession from "express-session"
 import studentController from './controllers/studentController.mjs'
 import majorController from './controllers/majorController.mjs'
 import categoryController from './controllers/categoryController.mjs'
 import locationController from './controllers/locationController.mjs'
 import schoolController from './controllers/schoolController.mjs'
-import cors from 'cors'
 
 const app = express();
 const port = process.env.PORT || 8080;

@@ -6,7 +6,7 @@ const studentSchema = new mongoose.Schema({
   lname: {type: String, required: true},
   school: {type: String, required: true},
   major: {type: String, required: true},
-  job_type: {type: String, required: true, enum: ["Internship, Full-Time"]},
+  job_type: {type: String, required: true, enum: ["Internship", "Full-Time"]},
   categories: {type: [String], required: true},
   location_prefs: {type: [String], required: true},
   grad_date: {type: String, required: true},
