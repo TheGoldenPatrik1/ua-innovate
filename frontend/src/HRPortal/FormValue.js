@@ -8,9 +8,8 @@ function FormValue({label, value, edit, inputType, stateKey, parentCallback, edi
     }
 
     return (
-        <div>
-            <label>{label}</label> {(editable ? edit : false) ? (inputType === 'select' ? <select value={value} onChange={changeValue}>{options.map(v => <option value={v}>{v}</option>)}</select> : <input type={inputType} onChange={changeValue} value={value} max={max} min={min}/>) : <span>{value}</span>}
-            <div style={{display:"none"}}><span>{stateKey}</span></div>
+        <div style={{display:"flex", alignContent:"start", columnGap:"7px"}}>
+            <label><strong>{label}</strong></label> {(editable ? edit : false) ? (inputType === 'select' ? <select value={value} onChange={changeValue}>{options.map(v => <option value={v}>{v}</option>)}</select> : (inputType === "textarea") ? <textarea onChange={changeValue}>{value}</textarea> : <input type={inputType} onChange={changeValue} value={value} max={max} min={min}/>) : <span>{value}</span>}
         </div>
     );
 

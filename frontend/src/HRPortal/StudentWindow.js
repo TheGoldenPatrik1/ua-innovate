@@ -128,10 +128,8 @@ class StudentWindow extends React.Component{
                 <div class="student-modal-content">
                     <div class="student-modal-header">
                         <span class="close" id="student-modal-close" onClick={this.closeStudentWindow}>&times;</span>
-                        {this.state.resume && <button class="modal-header-btn" onClick={this.resumeBtnClick}>View Resume</button>}
-                        <button class="modal-header-btn" disabled={this.state.reportDisabled} onClick={this.reportBtnClick}>Generate Report</button>
-                        <button class="modal-header-btn" onClick={this.editBtnClick}>{this.state.edit ? "Save" : "Edit"}</button>
-                        <button class="modal-header-btn" onClick={this.delBtnClick}>{this.state.edit ? "Cancel" : "Delete"}</button>
+                        
+                        
                         <h2>{this.GetFullName()}</h2>
                     </div>
                     <div id="student-window" class="modal-body">
@@ -149,7 +147,15 @@ class StudentWindow extends React.Component{
                         <FormValue label="Interview Status: " editable={true} value={this.state.interview_status} edit={this.state.edit} inputType="select" options={['Pending Review', 'First Round', 'Final Round', 'Offer Sent', 'Hired']} stateKey="interview_status" parentCallback={this.onChangeCallback}/>
                         <FormValue label="Technical Score: " editable={true} value={this.state.technical_score} edit={this.state.edit} inputType="number" stateKey="technical_score" parentCallback={this.onChangeCallback} max={5} min={0}/>
                         <FormValue label="Behavioral Score: " editable={true} value={this.state.behavioral_score} edit={this.state.edit} inputType="number" stateKey="behavioral_score" parentCallback={this.onChangeCallback} max={5} min={0}/>
-                        <FormValue label="Comments: " editable={true} value={this.state.comments} edit={this.state.edit} inputType="text" stateKey="comments" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Comments: " editable={true} value={this.state.comments} edit={this.state.edit} inputType="textarea" stateKey="comments" parentCallback={this.onChangeCallback}/>
+                    </div>
+                    <div className="divider"></div>
+                    <div class="student-modal-footer">
+                        <div className='button-container'><button class="modal-styled-button white modal-footer-btn" disabled={this.state.reportDisabled} onClick={this.reportBtnClick}>Generate Report</button></div>
+                        <div className='button-container'>{this.state.resume && <button class=" modal-styled-button white modal-footer-btn" onClick={this.resumeBtnClick}>View Resume</button>}</div>
+                        <div className='button-container'><button class="modal-styled-button blue modal-footer-btn" onClick={this.editBtnClick}>{this.state.edit ? "Save" : "Edit"}</button></div>
+                        <div className='button-container'><button class="modal-styled-button red modal-footer-btn" onClick={this.delBtnClick}>{this.state.edit ? "Cancel" : "Delete"}</button></div>
+                        
                     </div>
                 </div>
             </div>
