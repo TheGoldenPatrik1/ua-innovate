@@ -21,11 +21,11 @@ class StudentRow extends React.Component{
     render() {
         return (
             <tr class="student-row" onClick={this.toggleStudentWindow}>
-                <td><span class="student-field student-name">{this.state.student.name}</span></td>
-                <td><span class="student-field student-email">{this.state.student.email}</span></td>
-                <td><span class="student-field student-rating1">{this.state.student.rating1}</span></td>
-                <td><span class="student-field student-rating2">{this.state.student.rating2}</span></td>
-                <td><span class="student-field student-rating3">{this.state.student.rating3}</span></td>
+                <td><span class="student-field student-name">{`${this.state.student.lname}, ${this.state.student.fname}`}</span></td>
+                <td><span class="student-field student-grad-date">{this.state.student.grad_date}</span></td>
+                <td><span class="student-field student-status">{this.state.student.interview_status}</span></td>
+                <td><span class="student-field student-tech-score">{this.state.student.technical_score || 'N/A'}</span></td>
+                <td><span class="student-field student-behavior-score">{this.state.student.behavioral_score || 'N/A'}</span></td>
                 {/* <StudentWindow student={this.state.student} visible={this.state.visible} parentCallback={this.handleCallback}/> */}
                 {this.state.visible ===true && (
                     <div class="student-modal">
