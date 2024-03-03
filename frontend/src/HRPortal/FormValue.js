@@ -1,18 +1,10 @@
 import React, { useState } from "react";
 
-function FormValue({label, value, edit, inputType, stateKey, parentCallback, editable, options, max, min, href}) {
+function FormValue({label, value, edit, inputType, stateKey, parentCallback, editable, options, max, min}) {
 
     function changeValue(e) {
         value = e.target.value;
         parentCallback(stateKey, e.target.value);
-    }
-
-    if (inputType === 'href') {
-        return (
-            <div>
-                {href && <a href={`http://localhost:8080/${href}`}>{label}</a>}
-            </div>
-        )
     }
 
     return (
