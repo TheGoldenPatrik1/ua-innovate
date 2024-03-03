@@ -71,3 +71,7 @@
     -webkit-text-security: disc; 
     text-security: disc;
   }
+
+  .actionText {
+    color: #e31937;
+  }

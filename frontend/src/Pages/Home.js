@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './../styles/Home.css';
 import axios from 'axios';
 
 function Home() {
+    const params = new URLSearchParams(window.location.search)
+	const action = params.get("action")
+
     const [email, setEmail] = useState('')
     const [pw, setPW] = useState('')
+    const [actionText, setActionText] = useState('')
+
+    useEffect(() => {
+        if (action === 'delete') setActionText('Your account has been deleted successfully.')
+        if (action === 'logout') setActionText('You have logged out successfully.')
+    }, [])
+
     const navigate = useNavigate();
     const loginClick = () => {
-        if (!email || !email.length) return alert("Please specify an email address!")
-        if (!pw || !pw.length) return alert("Please specify a password!")
+        if (!email || !email.length) return setActionText("Please specify an email address!")
+        if (!pw || !pw.length) return setActionText("Please specify a password!")
         const params = {
             username: email,
             password: pw
@@ -25,14 +35,14 @@ function Home() {
                     }
                 }).catch(e => {
                     console.log(e)
-                    alert('Login failed')
+                    setActionText('Login failed')
                 })
             } else {
-                alert('Login failed')
+                setActionText('Login failed')
             }
         }).catch(e => {
             console.log(e)
-            alert('Login failed')
+            setActionText('Login failed')
         })
     }
     const createAccountClick = () => {
@@ -50,6 +60,7 @@ function Home() {
           <button className='button' onClick={loginClick}>Login</button>
           <h3 className="divider"></h3>
           <button className='button' onClick={createAccountClick}>New Application</button>
+          <section className='actionText'>{actionText}</section>
         </header>
       </div>
     );

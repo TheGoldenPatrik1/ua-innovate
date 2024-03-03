@@ -30,10 +30,22 @@ export default function() {
 	const deleteButton = () => {
 		const confirmDelete = window.confirm('Are you sure you want to delete your application?');
 		// navigate to student home
-		if (confirmDelete) navigate('/')
+		if (confirmDelete) {
+			axios.delete(`http://localhost:8080/api/students/${userID}`).then(r => {
+				axios.delete(`http://localhost:8080/api/users/${userData.email}`).then(r => {
+					navigate('/?action=delete')
+				}).catch(e => {
+					console.log(e)
+					alert('Something went wrong in deleting your user account')
+				})
+			}).catch(e => {
+				console.log(e)
+				alert('Something went wrong in deleting your student account')
+			})
+		}
 	}
 	const logoutButton = () => {
-		navigate('/')
+		navigate('/?action=logout')
 	}
 
     return (
