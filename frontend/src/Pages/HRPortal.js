@@ -1,24 +1,39 @@
 import StudentData from '../HRPortal/StudentData';
 import Sidebar from '../HRPortal/Sidebar';
 import StudentWindow from '../HRPortal/StudentWindow';
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "../styles/HRPortal.css"
+import "../styles/HRPortal.css";
+import axios from "axios";
+
+function sortByName(a, b) {
+    if (a.lname < b.lname) return -1;
+    if (a.lname > b.lname) return 1;
+    // If the first keys are equal, sort based on the second key
+    if (a.fname < b.fname) return -1;
+    if (a.fname > b.fname) return 1;
+    return 0;
+}
 
 function HRPortal() {
-    const state = {
-        students:GetStudents(),
-        window: '',
-    }
-
-    
-
-    const [students, setStudents] = useState(GetStudents());
+    const [students, setStudents] = useState({});
+    const [studentData, setStudentData] = useState({});
     const [window, setWindow] = useState('');
     const [sideBarVisible, setSideBarVisible] = useState(true);
 
+    useEffect(() => {
+        const fetchStudents = async () => {
+            const response = await axios.get(`http://localhost:8080/api/students`);
+            const data = response.data.sort(sortByName);
+            setStudentData(data);
+            setStudents(data);
+        }
+
+        fetchStudents();
+    }, [])
+
     const handleCallback = (childData) => {
-        if(childData == -1) {
+        if(childData === -1) {
             setWindow('') 
         } else {
             setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} />)
@@ -58,10 +73,10 @@ function HRPortal() {
                 {/*TODO: figure out how to include table headers later */}
                 <tr className="heading-row">
                     <th><span>Name</span></th>
-                    <th style={{width: "50%"}}><span>Email</span></th>
-                    <th><span>Rating 1</span></th>
-                    <th><span>Rating 2</span></th>
-                    <th><span>Rating 3</span></th>
+                    <th style={{width: "50%"}}><span>Grad Date</span></th>
+                    <th><span>Application Status</span></th>
+                    <th><span>Technical Score</span></th>
+                    <th><span>Behavioral Score</span></th>
                 </tr>
                 
         
@@ -77,25 +92,3 @@ function HRPortal() {
     
 }
 export default HRPortal;
-
-//Gets students from backend
-function GetStudents() {
-    var students = [];
-    for(var i = 0; i < 5; i++) {
-        students.push({
-            id: i,
-            name: "Student " + i,
-            email: "something@example.com",
-            major: "CS",
-            school: "School " + i,
-            rating1: Math.floor(Math.random() * 5),
-            rating2: Math.floor(Math.random() * 5),
-            rating3: Math.floor(Math.random() * 5)
-        });
-    }
-    return students;
-}
-
-function ToggleStudentWindow(number) {
-    console.log(number);
-}

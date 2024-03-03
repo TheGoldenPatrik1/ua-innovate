@@ -5,7 +5,7 @@ function FilterCategory({name, data}) {
     const options = [];
     const catName = "category-" + name.replace(/\s/g, '');
     for(let i = 0; i < data.length; i++) {
-        options.push(<div className={catName} style={{display: "none"}}><input type="checkbox"/><label>{data[i]}</label></div>)
+        options.push(<div className={catName} style={{display: "none"}}><input type="checkbox" value={data[i][0]}/><label>{data[i][1]}</label></div>)
     }
 
     const ToggleCheckboxes = () => {
