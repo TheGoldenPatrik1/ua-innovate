@@ -83,4 +83,19 @@ router.delete("/students/:id", async (req, res) => {
   }
 })
 
+// Delete a user by ID
+router.delete("/users/:username", async (req, res) => {
+  try {
+    const users = await User.find()
+    const user = users.filter((u) => u.username == req.params.username)[0]
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+    const deletedUser = await User.findByIdAndDelete(user._id)
+    res.json(deletedUser)
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
 export default router;
