@@ -73,7 +73,7 @@ class StudentWindow extends React.Component{
             if (confirmation) {
                 axios.delete(`http://localhost:8080/api/students/${this.state.student._id}`).then(r => {
 				    axios.delete(`http://localhost:8080/api/users/${this.state.email}`).then(r => {
-					    this.closeStudentWindow();
+					    this.navigation(0);
 				    }).catch(e => {
 					    console.log(e);
 					    alert('Something went wrong in deleting their account.');
