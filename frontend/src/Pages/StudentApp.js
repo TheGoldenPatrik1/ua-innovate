@@ -98,7 +98,14 @@ function StudentApp () {
             <p>
                 <label htmlFor="resume">Resume</label>
                 <br/>
-                <input type="file" id="resume" name="resume" value={resume} accept=".pdf,.doc,.docx" onChange={e => setResume('')}/>
+                <input type="file" id="resume" name="resume" value="" accept=".pdf" onChange={e => {
+                    const [file] = e.target.files
+                    setResume(file)
+                    document.getElementById("resume").style.color = 'transparent'
+                }}/>
+                {resume && <section>
+                    Successfully uploaded: {resume.name} ({Math.round(resume.size / 1024)} KB)
+                </section>}
             </p>
             <div className="form-row">
             <h1 class="header-label">Name:</h1>
