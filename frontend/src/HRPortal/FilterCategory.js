@@ -31,13 +31,14 @@ function FilterCategory({name, data, onChange}) {
     return (
         <div className="filter-category">
             <div className="category-title">
-                <span className="category-name">{name}</span>
+                <span className="category-name"><strong>{name}</strong></span>
                 <button onClick={ToggleCheckboxes}>{showCategory ? <MdOutlineExpandMore  /> : <MdOutlineArrowForwardIos size={8} />}</button>
             </div>
             
             <div className="category-options">
                 {options}
             </div>
+            <div className="side-divider"></div>
             
         </div>
         
