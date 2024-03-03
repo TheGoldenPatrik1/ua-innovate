@@ -85,17 +85,18 @@ function HRPortal() {
         setConstants(constants);
     }, []);
 
+    const navigate = useNavigate();
+
     const handleCallback = (childData) => {
         if(childData === -1) {
             setWindow('') 
         } else {
             console.log(childData);
-            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={windowConstants}/>)
+            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={windowConstants} navigation={navigate}/>)
         }
         
     }
 
-    const navigate = useNavigate();
     function createApplication() {
         navigate("/student/app");
     }
