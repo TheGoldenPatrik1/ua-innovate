@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
-import '../styles/StudentApp.css'
+import axios from 'axios';
+import '../styles/StudentApp.css';
 
 function StudentApp () {
     const params = new URLSearchParams(window.location.search)
@@ -68,7 +68,7 @@ function StudentApp () {
             const response = await axios.get(`http://localhost:8080/api/students/${userID}`)
             console.log(response.data)
             setHidePW(true)
-            setUserData(response.data);
+            setUserData(response.data)
             setFname(response.data.fname)
             setLname(response.data.lname)
             setEmail(response.data.email)
@@ -82,11 +82,12 @@ function StudentApp () {
             setLocsChecked(locations.map(v => response.data.location_prefs.includes(v._id)))
             setLocPref(response.data.location_prefs)
             setLinkedIn(response.data.linkedin)
+            setResume(response.data.resume)
         }
         if (userID) {
             fetchData()
         }
-    }, [userID])
+    }, [departments, locations])
 
     useEffect(() => {
         if (userData.job_type === 'Internship') {
@@ -100,7 +101,7 @@ function StudentApp () {
 
     const submitHandler = () => {
         // verify input - this probably needs to be expanded
-        if (!fname || !lname || !email || !pw || !cpw || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
+        if (!fname || !lname || !email || (!hidePW && (!pw || !cpw || !pwMatch)) || !phone || !major || !graduation || !workPref || !locPref.length || !depPref.length || !school) {
             return alert('Required field missing!')
         }
 
@@ -109,29 +110,46 @@ function StudentApp () {
         }
 
         // input is verified; now write to database
-        const params = {
-            email: email,
-            fname: fname,
-            lname: lname,
-            school: school,
-            major: major,
-            job_type: workPref,
-            categories: depPref,
-            location_prefs: locPref,
-            grad_date: graduation,
-            phone: phone,
-            interview_status: 'Pending Review'
-        }
-        if (linkedIn) params.linkedin = linkedIn
-        console.log(params)
-        axios.post(`http://localhost:8080/api/students`, params).then(r => {
-            // navigate to student home
-            console.log(r)
-            navigate('/student/home?id=' + r.data._id)
-        });
+        axios.post('http://localhost:8080/signup', {
+            username: email,
+            password: pw
+        }).then(r => {
+            const formData = new FormData()
+            const params = {
+                email: email,
+                fname: fname,
+                lname: lname,
+                school: school,
+                major: major,
+                job_type: workPref,
+                categories: depPref,
+                location_prefs: locPref,
+                grad_date: graduation,
+                phone: phone,
+                interview_status: 'Pending Review',
+                resume: resume
+            }
+            if (linkedIn) params.linkedin = linkedIn
+            console.log(params)
+            for (let key in params) {
+                if (Array.isArray(params[key])) {
+                    formData.append(key, JSON.stringify(params[key]))
+                } else {
+                    formData.append(key, params[key])
+                }
+            }
+            axios.post(`http://localhost:8080/api/students`, formData).then(r => {
+                // navigate to student home
+                console.log(r)
+                navigate('/student/home?id=' + r.data._id)
+            }).catch(e => {
+                console.log(e)
+            });
+        }).catch(e => {
+            console.log(e)
+            alert('Email is already tied to an account - please sign in or use a different email.')
+        })
     }
-
-    // for resume upload: https://www.filestack.com/fileschool/react/react-file-upload/
     
     return (
         <div className="background">
@@ -141,14 +159,18 @@ function StudentApp () {
             <p>
                 <label htmlFor="resume">Resume</label>
                 <br/>
-                <input type="file" id="resume" name="resume" value="" accept=".pdf" onChange={e => {
+                <input type="file" id="resume" name="resume" value="" style={{color: 'transparent'}} accept=".pdf" onChange={e => {
                     const [file] = e.target.files
                     setResume(file)
-                    document.getElementById("resume").style.color = 'transparent'
+                    //document.getElementById("resume").style.color = 'transparent'
                 }}/>
-                {resume && <section>
+                {resume && typeof(resume) !== 'string' && <section>
                     Successfully uploaded: {resume.name} ({Math.round(resume.size / 1024)} KB)
                 </section>}
+                {resume && typeof(resume) === 'string' && <section>
+                    <a href={`http://localhost:8080/${resume}`}>View Resume</a>
+                </section>}
+                {!resume && <section>No file selected</section>}
             </p>
 
             <div className="form-row">

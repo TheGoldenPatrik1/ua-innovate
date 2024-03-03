@@ -17,6 +17,8 @@ router.get('/students', async (req, res) => {
 // Create new student
 router.post('/students', upload.single('resume'), async (req, res) => {
   try{
+    req.body.categories = JSON.parse(req.body.categories)
+    req.body.location_prefs = JSON.parse(req.body.location_prefs)
     const student = new Student(req.body)
     if (req.file) {
       student.resume = req.file.path
@@ -24,6 +26,7 @@ router.post('/students', upload.single('resume'), async (req, res) => {
     await student.save();
     res.send(student);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: 'Internal server error' })
   }
 })
