@@ -84,7 +84,7 @@ function StudentApp () {
             setLinkedIn(response.data.linkedin)
             setResume(response.data.resume)
         }
-        if (userID) {
+        if (userID && userID.length > 5) {
             fetchData()
         }
     }, [departments, locations])
@@ -105,7 +105,7 @@ function StudentApp () {
             return alert('Required field missing!')
         }
 
-        if (linkedIn && !linkedIn.match(/^https:\/\/[a-z]{2,3}\.linkedin\.com\/.*$/)) {
+        if (linkedIn && !linkedIn.match(/^https?:\/\/([a-z]{2,3})?\.linkedin\.com\/.*$/)) {
             return alert('LinkedIn URL is invalid!')
         }
 
@@ -196,7 +196,6 @@ function StudentApp () {
                 <input type="file" id="resume" name="resume" value="" style={{color: 'transparent'}} accept=".pdf" onChange={e => {
                     const [file] = e.target.files
                     setResume(file)
-                    //document.getElementById("resume").style.color = 'transparent'
                 }}/>
                 {resume && typeof(resume) !== 'string' && <section>
                     Successfully uploaded: {resume.name} ({Math.round(resume.size / 1024)} KB)
