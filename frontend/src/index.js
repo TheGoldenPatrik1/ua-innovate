@@ -11,6 +11,7 @@ import StudentApp from "./pages/StudentApp"
 import StudentHome from "./pages/StudentHome"
 import HRPortal from "./pages/HRPortal"
 import ErrorPage from "./pages/ErrorPage"
+import QRPortal from "./pages/QRPortal"
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: 'hr',
     element: <HRPortal/>
+  },
+  {
+    path: 'qr',
+    element: <QRPortal/>
   }
 ]);
 

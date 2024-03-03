@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import './../styles/Home.css';
 import axios from 'axios';
-import ReactDOM from "react-dom";
-import QRCode from "react-qr-code";
 
 function Home() {
     const params = new URLSearchParams(window.location.search)
@@ -50,6 +48,9 @@ function Home() {
     const createAccountClick = () => {
         navigate("/student/app")
     }
+    const showQRCode = () => {
+        navigate('qr')
+    }
     return (
       <div className="app">
         <h1 className="CGI-lettering">CGI</h1>
@@ -62,6 +63,7 @@ function Home() {
           <button className='button' onClick={loginClick}>Login</button>
           <h3 className="divider"></h3>
           <button className='button button-margin' onClick={createAccountClick}>New Application</button>
+          <button className='button button-margin' onClick={showQRCode}>Show QR Code</button>
           <section className='actionText'>{actionText}</section>
         </header>
       </div>
