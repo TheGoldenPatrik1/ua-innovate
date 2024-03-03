@@ -1,7 +1,7 @@
 import StudentData from '../HRPortal/StudentData';
 import Sidebar from '../HRPortal/Sidebar';
 import StudentWindow from '../HRPortal/StudentWindow';
-import React, { useState, useEffect, forceUpdate } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/HRPortal.css";
 import axios from "axios";
@@ -21,6 +21,7 @@ function HRPortal() {
     const [window, setWindow] = useState('');
     const [sideBarVisible, setSideBarVisible] = useState(true);
     const [filters, setFilters] = useState({});
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -56,6 +57,44 @@ function HRPortal() {
         setSideBarVisible(!sideBarVisible);
     }
 
+    function applyFilters(studentData, newFilters) {
+        let newStudents = []
+        for(let i = 0; i < studentData.length; i++) {
+            let addStudent = true;
+            for(const [skey, value] of Object.entries(newFilters)) {
+                let category = false
+                for(let j = 0; j < value.length; j++) {
+                    
+                    if(skey === "job_type" || skey === "major") {
+                        console.log("Is " + studentData[i].fname + "[" + skey + "] = " +value[j] + "?");
+                        if(studentData[i][skey] === value[j]) {
+                            console.log("Setting " + studentData[i].fname + " to true with category " + skey);
+                            category = true;
+                        }
+                    } else if(skey === "categories" || skey === "location_prefs") {
+                        console.log("Does " + studentData[i].fname + "[" + skey + "] have " +value[j] + "? IndexOf = " + studentData[i][skey].indexOf(value[j]));
+                        if(studentData[i][skey].indexOf(value[j]) !== -1) {
+                            console.log("Setting " + studentData[i].fname + " to true with category " + skey);
+                            category = true;
+                        }
+                    }
+                    
+                }
+                if(!category) {
+                    console.log("Setting " + studentData[i].fname + " to false with category " + skey);
+                    addStudent = false;
+                    break;
+                } 
+            }
+            if(addStudent) {
+                newStudents.push(studentData[i]);
+            }
+            
+            
+        }
+        return newStudents
+    }
+
     function filterUpdated(id, key, value) {
         // console.log(id);
         // console.log(key);
@@ -88,39 +127,7 @@ function HRPortal() {
             if(Object.keys(newFilters).length === 0) {
                 newStudents = studentData;
             } else {
-                for(let i = 0; i < studentData.length; i++) {
-                    let addStudent = true;
-                    for(const [skey, value] of Object.entries(newFilters)) {
-                        let category = false
-                        for(let j = 0; j < value.length; j++) {
-                            
-                            if(skey === "job_type" || skey === "major") {
-                                console.log("Is " + studentData[i].fname + "[" + skey + "] = " +value[j] + "?");
-                                if(studentData[i][skey] === value[j]) {
-                                    console.log("Setting " + studentData[i].fname + " to true with category " + skey);
-                                    category = true;
-                                }
-                            } else if(skey === "categories" || skey === "location_prefs") {
-                                console.log("Does " + studentData[i].fname + "[" + skey + "] have " +value[j] + "? IndexOf = " + studentData[i][skey].indexOf(value[j]));
-                                if(studentData[i][skey].indexOf(value[j]) != -1) {
-                                    console.log("Setting " + studentData[i].fname + " to true with category " + skey);
-                                    category = true;
-                                }
-                            }
-                            
-                        }
-                        if(!category) {
-                            console.log("Setting " + studentData[i].fname + " to false with category " + skey);
-                            addStudent = false;
-                            break;
-                        } 
-                    }
-                    if(addStudent) {
-                        newStudents.push(studentData[i]);
-                    }
-                    
-                    
-                }
+                newStudents = applyFilters(studentData, newFilters)
             }
             
             console.log(newStudents);
@@ -129,7 +136,6 @@ function HRPortal() {
         
     }
     const studentElements = [];
-    const studentWindows = [];
     console.log(students);
     for(var i = 0; i < students.length; i++) {
         studentElements.push(<StudentData student={students[i]} parentCallback={handleCallback} key={i} num={i}/>)
@@ -146,7 +152,17 @@ function HRPortal() {
                 <button id="create-new-button" onClick={createApplication}>Create New</button>
                 <button id="logout-button" onClick={logoutClick}>Log Out</button>
             </div>
-            <input type="text" placeholder="search"/>
+            <input type="text" placeholder="search" value={search} onChange={(e) => {
+                const criteria = e.target.value
+                setSearch(criteria)
+                console.log(criteria)
+                const newStudents = []
+                for (let i = 0; i < studentData.length; i++) {
+                    if (studentData[i].lname.toLowerCase().includes(criteria.toLowerCase())) newStudents.push(studentData[i])
+                    else if (studentData[i].fname.toLowerCase().includes(criteria.toLowerCase())) newStudents.push(studentData[i])
+                }
+                setStudents(applyFilters(newStudents, filters))
+            }}/>
             <table id="student-table">
                 {/*TODO: figure out how to include table headers later */}
                 <tr className="heading-row">
