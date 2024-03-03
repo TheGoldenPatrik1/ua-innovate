@@ -1,7 +1,6 @@
 import "../styles/Sidebar.css"
 import FilterCategory from "./FilterCategory";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 function Sidebar({visible, filterChangeCallback, constants}) {
     const [filterCategories, setFilterCategories] = useState(constants);

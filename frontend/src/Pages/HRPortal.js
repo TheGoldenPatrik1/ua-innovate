@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/HRPortal.css";
 import axios from "axios";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function sortByName(a, b) {
     if (a.lname < b.lname) return -1;
@@ -97,11 +98,15 @@ function HRPortal() {
         
     }
 
+    function exportData() {
+        alert('yo that data be bussin')
+    }
+
     function createApplication() {
         navigate("/student/app");
     }
     function logoutClick() {
-        navigate("/");
+        navigate("/?action=logout");
     }
 
     function toggleSideBarClick() {
@@ -196,7 +201,7 @@ function HRPortal() {
             <div class="portal-main">
                 <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated} constants={constants}/>
                 <div id="main">
-                    <button id="toggle-side-panel-button" onClick={toggleSideBarClick}>-</button>
+                    <button id="toggle-side-panel-button" onClick={toggleSideBarClick}><GiHamburgerMenu/></button>
                 <div className='portal-title'>
                     <h1 id="title-text">HR Portal</h1>
                     <div id='portal-search-container'>
@@ -213,6 +218,9 @@ function HRPortal() {
                         }}/>
                     </div>
                     
+                    <div className='button-container'>
+                        <button className='styled-button gray' id="create-new-button" onClick={exportData}>Export Data</button>
+                    </div>
                     <div className='button-container'>
                         <button className='styled-button blue' id="create-new-button" onClick={createApplication}>Create New</button>
                     </div>
