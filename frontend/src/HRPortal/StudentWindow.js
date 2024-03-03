@@ -8,9 +8,22 @@ class StudentWindow extends React.Component{
         this.state = {
             student: props.student,
             edit: false,
-            
+            categories: props.student.categories,
+            email: props.student.email,
+            fname: props.student.fname,
+            gradDate: props.student["grad_date"],
+            interviewStatus: props.student["interview_status"],
+            jobType: props.student["job_type"],
+            lname: props.student.lname,
+            locationPrefs: props.student["location_prefs"],
+            major: props.student.major,
+            phone: props.student.phone,
+            resume: props.student.resume,
+            school: props.student.school,
+            linkedin: props.student.linkedin,
+            constants: props.constants
         }
-        console.log(props.student);
+        console.log(this.state.constants);
     }
 
     closeStudentWindow = () => {
@@ -56,6 +69,10 @@ class StudentWindow extends React.Component{
         
     }
 
+    GetFullName = () => {
+        return this.state.lname + ", " + this.state.fname
+    }
+
     render() {
         return (
             <div class="student-modal">
@@ -64,13 +81,20 @@ class StudentWindow extends React.Component{
                         <span class="close" id="student-modal-close" onClick={this.closeStudentWindow}>&times;</span>
                         <button class="modal-header-btn" onClick={this.editBtnClick}>{this.state.edit ? "Save" : "Edit"}</button>
                         <button class="modal-header-btn" onClick={this.delBtnClick}>{this.state.edit ? "Cancel" : "Delete"}</button>
-                        {/* <h2>{this.state.student.name}</h2> */}
+                        <h2>{this.GetFullName()}</h2>
                     </div>
                     <div id="student-window" class="modal-body">
-                        {/* <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 1: " value={this.state.rating1} edit={this.state.edit} inputType="number" stateKey="rating1" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 2: " value={this.state.rating2} edit={this.state.edit} inputType="number" stateKey="rating2" parentCallback={this.onChangeCallback}/>
-                        <FormValue label="Rating 3: " value={this.state.rating3} edit={this.state.edit} inputType="number" stateKey="rating3" parentCallback={this.onChangeCallback}/> */}
+                        <FormValue label="First Name: " value={this.state.fname} edit={this.state.edit} inputType="text" stateKey="fname" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Last Name: " value={this.state.lname} edit={this.state.edit} inputType="text" stateKey="lname" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Email: " value={this.state.email} edit={this.state.edit} inputType="text" stateKey="email" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Phone Number: " value={this.state.phone} edit={this.state.edit} inputType="number" stateKey="phone" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="School: " value={this.state.school} edit={this.state.edit} inputType="text" stateKey="school" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Major: " value={this.state.major} edit={this.state.edit} inputType="text" stateKey="major" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Graduation Date: " value={this.state.gradDate} edit={this.state.edit} inputType="date" stateKey="gradDate" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Job Type: " value={this.state.jobType} edit={this.state.edit} inputType="text" stateKey="jobType" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="LinkedIn: " value={this.state.linkedin} edit={this.state.edit} inputType="text" stateKey="linkedin" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Department Preferences: " value={this.state.categories} edit={this.state.edit} inputType="text" stateKey="categories" parentCallback={this.onChangeCallback}/>
+                        <FormValue label="Location Preferences: " value={this.state.locationPrefs} edit={this.state.edit} inputType="text" stateKey="locationPreferences" parentCallback={this.onChangeCallback}/>
                     </div>
                 </div>
             </div>

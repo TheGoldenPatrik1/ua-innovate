@@ -21,7 +21,8 @@ function HRPortal() {
     const [window, setWindow] = useState('');
     const [sideBarVisible, setSideBarVisible] = useState(true);
     const [filters, setFilters] = useState({});
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState('');
+    const [constants, setConstants] = useState({});
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -34,12 +35,37 @@ function HRPortal() {
         fetchStudents();
     }, [])
 
+    useEffect(() => {
+        const fetchMajors = async () => {
+            const response = await axios.get(`http://localhost:8080/api/majors`);
+            constants["Majors"] = response.data.map(v =>  [v._id, v.major]);
+            setConstants(constants);
+        }
+        const fetchDepartments = async () => {
+            const response = await axios.get(`http://localhost:8080/api/categories`);
+            constants["Departments"] = response.data.map(v =>  [v._id, v.category]);
+            setConstants(constants);
+        }
+        const fetchLocations = async () => {
+            const response = await axios.get(`http://localhost:8080/api/locations`);
+            constants["Locations"] = response.data.map(v =>  [v._id, v.city + ", " + v.state]);
+            setConstants(constants);
+        }
+
+        fetchMajors();
+        fetchDepartments();
+        fetchLocations();
+
+        constants["Job Type"] = [["Full-Time", "Full-Time"], ["Internship", "Internship"]];
+        setConstants(constants);
+    }, []);
+
     const handleCallback = (childData) => {
         if(childData === -1) {
             setWindow('') 
         } else {
             console.log(childData);
-            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} />)
+            setWindow(<StudentWindow student={students[childData]} parentCallback={handleCallback} constants={constants}/>)
         }
         
     }
@@ -144,7 +170,7 @@ function HRPortal() {
     
     return (
         <div class="portal">
-            <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated}/>
+            <Sidebar visible={sideBarVisible} filterChangeCallback={filterUpdated} constants={constants}/>
             <div id="main">
                 <button id="toggle-side-panel-button" onClick={toggleSideBarClick}>-</button>
             <div>
