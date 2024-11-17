@@ -1,6 +1,6 @@
 # UA Innovate 2024
 
-Our application is a three-tier full-stack mobile application to assist CGI with managing candidate data.
+Our application is a three-tier full-stack web application to assist CGI with managing candidate data.
 
 ## Frontend
 
